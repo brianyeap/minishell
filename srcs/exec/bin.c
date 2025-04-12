@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:08:41 by brian             #+#    #+#             */
-/*   Updated: 2025/04/11 18:23:53 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:04:06 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ char		*check_dir(char *bin, char *command)
 	return (path);
 }
 
-// execution for external binaries
 int			exec_bin(char **args, t_env *env, t_mini *mini)
 {
 	int		i;
@@ -107,21 +106,21 @@ int			exec_bin(char **args, t_env *env, t_mini *mini)
 	int		ret;
 
 	i = 0;
-	ret = UNKNOWN_COMMAND; // Find Path
+	ret = UNKNOWN_COMMAND;
 	while (env && env->value && ft_strncmp(env->value, "PATH=", 5) != 0)
 		env = env->next;
-	if (env == NULL || env->next == NULL) // no PATH try exec
+	if (env == NULL || env->next == NULL)
 		return (magic_box(args[0], args, env, mini));
 	bin = ft_split(env->value, ':');
 	if (!args[0] && !bin[0])
-		return (ERROR); // Path empty
+		return (ERROR);
 	i = 1;
 	path = check_dir(bin[0] + 5, args[0]);
 	while (args[0] && bin[i] && path == NULL)
 		path = check_dir(bin[i++], args[0]);
-	if (path != NULL) // found path
+	if (path != NULL)
 		ret = magic_box(path, args, env, mini);
-	else // execute as is
+	else
 		ret = magic_box(args[0], args, env, mini);
 	free_tab(bin);
 	ft_memdel(path);

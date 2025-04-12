@@ -6,13 +6,12 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:55:03 by brian             #+#    #+#             */
-/*   Updated: 2025/03/12 16:33:45 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:05:21 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// chedck if there is open quotes
 int quotes(char *line, int index)
 {
 	int i;
@@ -54,7 +53,6 @@ int is_last_valid_arg(t_token *token)
 	if (!token || is_type(token, CMD) || is_type(token, ARG))
 	{
 		prev = prev_sep(token, NOSKIP);
-		// If no prev token or prev is an END token or prev is a PIPE token its the last valid argument
 		if (!prev || is_type(prev, END) || is_type(prev, PIPE))
 			return (1);
 		return (0);
@@ -63,7 +61,6 @@ int is_last_valid_arg(t_token *token)
 		return (0);
 }
 
-// Ignore the ones that s are escaped
 int ignore_sep(char *line, int i)
 {
 	if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == ';')
@@ -82,12 +79,12 @@ int check_line(t_mini *mini, t_token *token)
 	while (token)
 	{
 		if (is_types(token, "TAI") && (!token->next || is_types(token->next, "TAIPE")))
-		{ // token is redirection && no next or next is invalid operator
+		{
 			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
 			token->next ? ft_putstr_fd(token->next->str, STDERR) : 0;
-			token->next ? 0 : ft_putstr_fd("newline", STDERR); //mimic bash error
+			token->next ? 0 : ft_putstr_fd("newline", STDERR);
 			ft_putendl_fd("'", STDERR);
-			mini->ret = 258; // Bash syntax error exit code
+			mini->ret = 258;
 			return (0);
 		}
 		if (is_types(token, "PE") && (!token->prev || !token->next || is_types(token->prev, "TAIPE")))

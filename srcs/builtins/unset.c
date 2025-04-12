@@ -6,10 +6,9 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:57:35 by brian             #+#    #+#             */
-/*   Updated: 2025/04/11 18:15:29 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:03:02 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -36,7 +35,6 @@ static void		free_node(t_mini *mini, t_env *env)
 	ft_memdel(env);
 }
 
-// Unlink the node from the list to unset
 int				ft_unset(char **a, t_mini *mini)
 {
 	t_env	*env;
@@ -64,3 +62,4 @@ int				ft_unset(char **a, t_mini *mini)
 	}
 	return (SUCCESS);
 }
+

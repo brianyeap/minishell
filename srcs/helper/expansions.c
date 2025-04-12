@@ -6,13 +6,12 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 23:36:18 by brian             #+#    #+#             */
-/*   Updated: 2025/04/11 22:26:17 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:04:57 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//get the len cahracter count
 int		ret_size(int ret)
 {
 	char	*tmp;
@@ -31,13 +30,10 @@ int		get_var_len(const char *arg, int pos, t_env *env, int ret)
 	int		i;
 
 	i = 0;
-	// Handle special case for $?
 	if (arg[pos] == '?')
 		return (ret_size(ret));
-	// invalid digit
 	if (ft_isdigit(arg[pos]))
 		return (0);
-	// get the var name
 	while (arg[pos] && is_env_char(arg[pos]) == 1 && i < BUFF_SIZE)
 	{
 		var_name[i] = arg[pos];
@@ -51,7 +47,6 @@ int		get_var_len(const char *arg, int pos, t_env *env, int ret)
 	return (i);
 }
 
-// Calculate len aft expansion
 int		arg_alloc_len(const char *arg, t_env *env, int ret)
 {
 	int		i;
@@ -95,7 +90,6 @@ char	*get_var_value(const char *arg, int pos, t_env *env, int ret)
 	}
 	if (ft_isdigit(arg[pos]))
 		return (NULL);
-	// get env var name
 	while (arg[pos] && is_env_char(arg[pos]) == 1 && i < BUFF_SIZE)
 	{
 		var_name[i] = arg[pos];

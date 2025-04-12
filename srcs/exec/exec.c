@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 23:24:40 by brian             #+#    #+#             */
-/*   Updated: 2025/04/11 17:41:25 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:04:43 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	exec_cmd(t_mini *mini, t_token *token)
 	char	**cmd;
 	int		i;
 
-	if (mini->charge == 0) // if can exec
+	if (mini->charge == 0)
 		return ;
-	cmd = cmd_tab(token); // linked list to array
+	cmd = cmd_tab(token);
 	i = 0;
 	while (cmd && cmd[i])
 	{
@@ -56,11 +56,11 @@ void	exec_cmd(t_mini *mini, t_token *token)
 		i++;
 	}
 	if (cmd && ft_strcmp(cmd[0], "exit") == 0 && has_pipe(token) == 0)
-		mini_exit(mini, cmd); // terminate shell
+		mini_exit(mini, cmd);
 	else if (cmd && is_builtin(cmd[0]))
-		mini->ret = exec_builtin(cmd, mini); // if is builtin
+		mini->ret = exec_builtin(cmd, mini);
 	else if (cmd)
-		mini->ret = exec_bin(cmd, mini->env, mini); // external cmd
+		mini->ret = exec_bin(cmd, mini->env, mini);
 	free_tab(cmd);
 	ft_close(mini->pipin);
 	ft_close(mini->pipout);

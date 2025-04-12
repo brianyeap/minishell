@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:07:25 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 04:47:26 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:06:02 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 t_sig	g_sig;
 
-// Redir, piping, executing
 void	redir_and_exec(t_mini *mini, t_token *token)
 {
 	t_token	*prev;
@@ -32,11 +31,11 @@ void	redir_and_exec(t_mini *mini, t_token *token)
 		input(mini, token);
 	else if (is_type(prev, PIPE))
 		pipe = minipipe(mini);
-	if (next && is_type(next, END) == 0 && pipe != 1) // !parent
-		redir_and_exec(mini, next->next); // if ! end && next=1 then recurssive
+	if (next && is_type(next, END) == 0 && pipe != 1)
+		redir_and_exec(mini, next->next);
 	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)
 			&& pipe != 1 && mini->no_exec == 0)
-			exec_cmd(mini, token); // prev == end || !prev == exec
+			exec_cmd(mini, token);
 }
 
 void	minishell(t_mini *mini)
@@ -44,20 +43,20 @@ void	minishell(t_mini *mini)
 	t_token	*token;
 	int		status;
 
-	token = next_cmd(mini->start, NOSKIP); // Find next command
+	token = next_cmd(mini->start, NOSKIP);
 	token = (is_types(mini->start, "TAI")) ? mini->start->next : token;
 	while (mini->exit == 0 && token)
 	{
-		mini->charge = 1; // CMD being executed
-		mini->parent = 1; // Parent process
-		mini->last = 1; // Last command
+		mini->charge = 1;
+		mini->parent = 1;
+		mini->last = 1;
 		redir_and_exec(mini, token);
-		reset_std(mini); // reset 2 ori
+		reset_std(mini);
 		close_fds(mini);
 		reset_fds(mini);
-		waitpid(-1, &status, 0); // wait child
-		status = WEXITSTATUS(status); // get exit status
-		mini->ret = (mini->last == 0) ? status : mini->ret; // set final exit status
+		waitpid(-1, &status, 0);
+		status = WEXITSTATUS(status);
+		mini->ret = (mini->last == 0) ? status : mini->ret;
 		if (mini->parent == 0)
 		{
 			free_token(mini->start);
@@ -74,8 +73,8 @@ int main(int argc, char **argv, char **env) {
 	(void)argc;
 	(void)argv;
 	(void)env;
-	mini.in = dup(STDIN); // save ori
-	mini.out = dup(STDOUT); // save ori
+	mini.in = dup(STDIN);
+	mini.out = dup(STDOUT);
 	mini.exit = 0;
 	mini.ret = 0;
 	mini.no_exec = 0;

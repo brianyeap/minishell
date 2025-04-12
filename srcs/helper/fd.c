@@ -6,13 +6,12 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:58:44 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 04:56:42 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:05:00 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// make sure it is unused
 void	reset_fds(t_mini *mini)
 {
 	mini->fdin = -1;

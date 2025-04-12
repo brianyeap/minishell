@@ -6,12 +6,11 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:19:07 by brian             #+#    #+#             */
-/*   Updated: 2025/04/11 18:08:15 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:02:47 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static int	print_error(int error, const char *arg)
 {
@@ -93,7 +92,7 @@ int			ft_export(char **args, t_env *env, t_env *secret)
 
 	new_env = 0;
 	if (!args[1])
-	{// if no args then print env
+	{
 		print_sorted_env(secret);
 		return (SUCCESS);
 	}

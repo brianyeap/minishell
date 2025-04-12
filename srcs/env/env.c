@@ -6,13 +6,12 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 17:50:25 by brian             #+#    #+#             */
-/*   Updated: 2025/04/11 20:40:45 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:03:14 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Total len
 size_t			size_env(t_env *lst)
 {
 	size_t	lst_len;
@@ -30,7 +29,6 @@ size_t			size_env(t_env *lst)
 	return (lst_len);
 }
 
-// turn env to string
 char			*env_to_str(t_env *lst)
 {
 	char	*env;
@@ -60,7 +58,6 @@ char			*env_to_str(t_env *lst)
 	return (env);
 }
 
-// convert into linked list
 int		init_env(t_mini *mini, char **env_array)
 {
 	t_env	*env;

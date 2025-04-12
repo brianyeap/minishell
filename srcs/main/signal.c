@@ -6,13 +6,12 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:36:00 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 05:19:20 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:06:54 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// For Ctrl+C
 void sig_int(int code)
 {
 	(void)code;
@@ -31,7 +30,6 @@ void sig_int(int code)
 	g_sig.sigint = 1;
 }
 
-// For Ctrl+ '\'
 void sig_quit(int code)
 {
 	char *nbr;
@@ -51,8 +49,8 @@ void sig_quit(int code)
 
 void sig_init(void)
 {
-	g_sig.sigint = 0; // ctrl + c
-	g_sig.sigquit = 0; // ctrl + "\"
-	g_sig.pid = 0; // child pid
-	g_sig.exit_status = 0; // exit status
+	g_sig.sigint = 0;
+	g_sig.sigquit = 0;
+	g_sig.pid = 0;
+	g_sig.exit_status = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 16:56:03 by brian             #+#    #+#             */
-/*   Updated: 2025/04/11 18:02:27 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:02:21 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ int				ft_cd(char **args, t_env *env)
 
 	if (!args[1])
 		return (go_to_path(0, env));
-	// - is flag to switch to OLDPWD
 	if (ft_strcmp(args[1], "-") == 0)
 		cd_ret = go_to_path(1, env);
 	else

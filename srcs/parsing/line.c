@@ -5,9 +5,9 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:46:45 by brian             #+#    #+#             */
-/*   Updated: 2025/04/09 23:14:05 by brian            ###   ########.fr       */
-/*                                         export                                    */
+/*   Created: 2025/04/12 17:08:10 by brian             #+#    #+#             */
+/*   Updated: 2025/04/12 17:08:12 by brian            ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
@@ -42,17 +42,17 @@ char *space_line(char *line)
 	new = space_alloc(line);
 	while (new && line[i])
 	{
-		if (quotes(line, i) != 2 && line[i] == '$' && i && line[i - 1] != '\\') // must ' and is $ and not escaped
+		if (quotes(line, i) != 2 && line[i] == '$' && i && line[i - 1] != '\\')
 			new[j++] = (char)(-line[i++]);
 		else if (quotes(line, i) == 0 && is_seperator(line, i))
-		{ // add spaces around seperator
+		{
 			new[j++] = ' ';
 			new[j++] = line[i++];
 			if (quotes(line, i) == 0 && line[i] == '>')
 				new[j++] = line[i++];
 			new[j++] = ' ';
 		}
-		else // copy regular char
+		else
 			new[j++] = line[i++];
 	}
 	new[j] = '\0';
@@ -60,7 +60,6 @@ char *space_line(char *line)
 	return (new);
 }
 
-// Check for unmatched quotes
 int quote_check(t_mini *mini, char **line)
 {
 	if (quotes(*line, 2147483647))
@@ -79,8 +78,8 @@ void	parse(t_mini *mini)
 	char	*line;
 	t_token	*token;
 
-	signal(SIGINT, &sig_int); // ctrl + c
-	signal(SIGQUIT, &sig_quit); // ctrl + "\"
+	signal(SIGINT, &sig_int);
+	signal(SIGQUIT, &sig_quit);
 	mini->ret ? ft_putstr_fd("🤬 ", STDERR) : ft_putstr_fd("😎 ", STDERR);
 	ft_putstr_fd("\033[0;36m\033[1mminishell ▸ \033[0m", STDERR);
 	if (get_next_line(0, &line) == -2 && (mini->exit = 1))

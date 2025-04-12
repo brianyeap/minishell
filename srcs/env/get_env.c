@@ -6,13 +6,12 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:16:05 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 05:11:26 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:03:34 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// checkif alphanumeric or underscore
 int		is_env_char(int c)
 {
 	if (ft_isalnum(c) == 1 || c == '_')
@@ -25,7 +24,6 @@ int		is_valid_env(const char *env)
 	int		i;
 
 	i = 0;
-	// env var vant start with a digit
 	if (ft_isdigit(env[i]) == 1)
 		return (0);
 	while (env[i] && env[i] != '=')
@@ -39,7 +37,6 @@ int		is_valid_env(const char *env)
 	return (1);
 }
 
-// claculate len
 int		env_value_len(const char *env)
 {
 	int		i;
@@ -58,7 +55,6 @@ int		env_value_len(const char *env)
 	return (size_name);
 }
 
-// get env key value
 char	*env_value(char *env)
 {
 	int		i;
@@ -66,17 +62,14 @@ char	*env_value(char *env)
 	int		size_alloc;
 	char	*env_value;
 
-	// get size of env value
 	size_alloc = env_value_len(env) + 1;
 	if (!(env_value = malloc(sizeof(char) * size_alloc)))
 		return (NULL);
 	i = 0;
-	// skip to value
 	while (env[i] && env[i] != '=')
 		i++;
 	i += 1;
 	j = 0;
-	// copy value
 	while (env[i])
 		env_value[j++] = env[i++];
 	env_value[j] = '\0';
@@ -91,7 +84,7 @@ char	*get_env_value(char *arg, t_env *env)
 	env_val = ft_strdup("");
 	while (env && env->value)
 	{
-		get_env_key(env_key_name, env->value); // set key
+		get_env_key(env_key_name, env->value);
 		if (ft_strcmp(arg, env_key_name) == 0)
 		{
 			ft_memdel(env_val);

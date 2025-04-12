@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:00:29 by brian             #+#    #+#             */
-/*   Updated: 2025/04/11 21:11:48 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:03:44 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int			str_env_len(char **env)
 	return (i);
 }
 
-// Bubble sort
 void		sort_env(char **tab, int env_len)
 {
 	int		ordered;
@@ -62,7 +61,6 @@ void		print_sorted_env(t_env *env)
 	i = 0;
 	while (tab[i])
 	{
-		// delare -x mimics export
 		ft_putstr("declare -x ");
 		ft_putendl(tab[i]);
 		i++;
