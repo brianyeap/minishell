@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:11:20 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 05:50:21 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:09:39 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,24 @@ void	squish_args(t_mini *mini)
 	token = mini->start;
 	while (token)
 	{
-		prev = prev_sep(token, NOSKIP); // Finds the previous separator
-		if (is_type(token, ARG) && is_types(prev, "TAI")) //  TAI = TRUNC, APPEND, INPUT
+		prev = prev_sep(token, NOSKIP);
+		if (is_type(token, ARG) && is_types(prev, "TAI"))
 		{
 			while (is_last_valid_arg(prev) == 0)
 				prev = prev->prev;
-			token->prev->next = token->next; // rm bc aft redirect != args it's target
+			token->prev->next = token->next;
 			if (token->next)
 				token->next->prev = token->prev;
-			token->prev = prev; // Setting sep as prev token for target
-			token->next = (prev) ? prev->next : mini->start; // prevent disconnection
+			token->prev = prev;
+			token->next = (prev) ? prev->next : mini->start;
 			prev->next->prev = token;
-			prev->next = (mini->start->prev) ? prev->next : token; // Handle start if update
-			mini->start = (mini->start->prev) ? mini->start->prev : mini->start; // make sure start points to the first token
+			prev->next = (mini->start->prev) ? prev->next : token;
+			mini->start = (mini->start->prev) ? mini->start->prev : mini->start;
 		}
 		token = token->next;
 	}
 }
 
-// Gets the next token while ignoring ' ' and slash
 t_token	*next_token(char *line, int *i)
 {
 	t_token	*token;
@@ -110,9 +109,9 @@ t_token *get_tokens(char *line)
 		type_arg(next, sep);
 		ft_skip_is_space(line, &i);
 	}
-	if (next) // set the last token to NULL
+	if (next)
 		next->next = NULL;
 	while (next && next->prev)
-		next = next->prev; // return head
+		next = next->prev;
 	return (next);
 }
