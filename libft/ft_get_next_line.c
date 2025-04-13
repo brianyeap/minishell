@@ -6,13 +6,13 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:26:28 by brian             #+#    #+#             */
-/*   Updated: 2025/03/12 17:38:25 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 05:19:18 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		newline_check(char *stock, int read_size)
+int	newline_check(char *stock, int read_size)
 {
 	int	i;
 
@@ -42,7 +42,8 @@ char	*buf_join(char *stock, char *buf)
 		i++;
 	while (buf[j] != '\0')
 		j++;
-	if (!(new = malloc(sizeof(char) * (i + j + 1))))
+	new = malloc(sizeof(char) * (i + j + 1));
+	if (!new)
 		return (ft_memdel(stock));
 	i = 0;
 	j = 0;
@@ -69,7 +70,8 @@ char	*stock_trim(char *stock)
 		i++;
 	while (stock[i++] != '\0')
 		j++;
-	if (!(trimmed = malloc(sizeof(char) * j + 1)))
+	trimmed = malloc(sizeof(char) * j + 1);
+	if (!trimmed)
 		return (ft_memdel(stock));
 	i = 0;
 	j = 0;
@@ -93,7 +95,8 @@ char	*get_line(char *stock)
 	i = 0;
 	while (stock[i] != '\n' && stock[i] != '\0')
 		i++;
-	if (!(line = malloc(sizeof(char) * i + 1)))
+	line = malloc(sizeof(char) * i + 1);
+	if (!line)
 		return (ft_memdel(stock));
 	i = 0;
 	while (stock[i] != '\n' && stock[i] != '\0')
@@ -105,7 +108,7 @@ char	*get_line(char *stock)
 	return (line);
 }
 
-int		get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	int			read_len;
 	char		buf[BUFFER_SIZE + 1];
@@ -116,7 +119,8 @@ int		get_next_line(int fd, char **line)
 	read_len = 1;
 	while (!(newline_check(stock, read_len)))
 	{
-		if ((read_len = read(fd, buf, BUFFER_SIZE)) == -1)
+		read_len = read(fd, buf, BUFFER_SIZE);
+		if (read_len == -1)
 			return (-1);
 		buf[read_len] = '\0';
 		(read_len == 0 || buf[read_len - 1] != '\n') ? ft_printf("  \b\b") : 0;

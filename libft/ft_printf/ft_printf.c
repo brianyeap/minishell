@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:43:17 by bryeap            #+#    #+#             */
-/*   Updated: 2024/07/29 17:57:01 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 05:21:06 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_format(va_list args, const char format)
 		len += ft_print_hex(va_arg(args, unsigned int), format);
 	else if (format == '%')
 		len += write(1, "%", 1);
-	return len;
+	return (len);
 }
 
 int	ft_printf(const char *format, ...)
@@ -62,7 +62,6 @@ int	ft_printf(const char *format, ...)
 // {
 // 	char *test = "test";
 // 	int num = 2147483650;
-	
 // 	ft_printf("%c", 'a');
 // 	ft_printf("%c", '\n');
 // 	ft_printf("%s", "test");
