@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:07:25 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 17:06:02 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:29:15 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	redir_and_exec(t_mini *mini, t_token *token)
 	if (next && is_type(next, END) == 0 && pipe != 1)
 		redir_and_exec(mini, next->next);
 	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)
-			&& pipe != 1 && mini->no_exec == 0)
-			exec_cmd(mini, token);
+		&& pipe != 1 && mini->no_exec == 0)
+		exec_cmd(mini, token);
 }
 
 void	minishell(t_mini *mini)
@@ -67,7 +67,8 @@ void	minishell(t_mini *mini)
 	}
 }
 
-int main(int argc, char **argv, char **env) {
+int	main(int argc, char **argv, char **env)
+{
 	t_mini	mini;
 
 	(void)argc;
@@ -79,7 +80,7 @@ int main(int argc, char **argv, char **env) {
 	mini.ret = 0;
 	mini.no_exec = 0;
 	reset_fds(&mini);
-	init_env(&mini, env);	
+	init_env(&mini, env);
 	init_secret_env(&mini, env);
 	increment_shell(mini.env);
 	while (mini.exit == 0)

@@ -6,13 +6,13 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:08:41 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 17:04:06 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 04:55:46 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			error_message(char *path)
+int	error_message(char *path)
 {
 	DIR	*folder;
 	int	fd;
@@ -40,7 +40,7 @@ int			error_message(char *path)
 	return (ret);
 }
 
-int			magic_box(char *path, char **args, t_env *env, t_mini *mini)
+int	magic_box(char *path, char **args, t_env *env, t_mini *mini)
 {
 	char	**env_array;
 	char	*ptr;
@@ -68,7 +68,7 @@ int			magic_box(char *path, char **args, t_env *env, t_mini *mini)
 	return (ret);
 }
 
-char		*path_join(const char *s1, const char *s2)
+char	*path_join(const char *s1, const char *s2)
 {
 	char	*tmp;
 	char	*path;
@@ -79,7 +79,7 @@ char		*path_join(const char *s1, const char *s2)
 	return (path);
 }
 
-char		*check_dir(char *bin, char *command)
+char	*check_dir(char *bin, char *command)
 {
 	DIR				*folder;
 	struct dirent	*item;
@@ -98,7 +98,7 @@ char		*check_dir(char *bin, char *command)
 	return (path);
 }
 
-int			exec_bin(char **args, t_env *env, t_mini *mini)
+int	exec_bin(char **args, t_env *env, t_mini *mini)
 {
 	int		i;
 	char	**bin;

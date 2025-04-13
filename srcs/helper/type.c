@@ -6,13 +6,13 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:55:14 by brian             #+#    #+#             */
-/*   Updated: 2025/04/06 00:26:18 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:26:11 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		is_type(t_token *token, int type)
+int	is_type(t_token *token, int type)
 {
 	if (token && token->type == type)
 		return (1);
@@ -20,7 +20,7 @@ int		is_type(t_token *token, int type)
 		return (0);
 }
 
-int		is_types(t_token *token, char *types)
+int	is_types(t_token *token, char *types)
 {
 	if (ft_strchr(types, ' ') && is_type(token, EMPTY))
 		return (1);
@@ -41,7 +41,7 @@ int		is_types(t_token *token, char *types)
 	return (0);
 }
 
-int		has_pipe(t_token *token)
+int	has_pipe(t_token *token)
 {
 	while (token && is_type(token, END) == 0)
 	{

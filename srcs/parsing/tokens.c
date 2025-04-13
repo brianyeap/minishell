@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:11:20 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 17:09:39 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:31:55 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_token	*next_token(char *line, int *i)
 	j = 0;
 	c = ' ';
 	if (!(token = malloc(sizeof(t_token)))
-	|| !(token->str = malloc(sizeof(char) * next_alloc(line, i))))
+		|| !(token->str = malloc(sizeof(char) * next_alloc(line, i))))
 		return (NULL);
 	while (line[*i] && (line[*i] != ' ' || c != ' '))
 	{
@@ -87,12 +87,12 @@ t_token	*next_token(char *line, int *i)
 	return (token);
 }
 
-t_token *get_tokens(char *line)
+t_token	*get_tokens(char *line)
 {
-	t_token *prev;
-	t_token *next;
-	int i;
-	int sep;
+	t_token	*prev;
+	t_token	*next;
+	int		i;
+	int		sep;
 
 	prev = NULL;
 	next = NULL;

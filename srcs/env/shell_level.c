@@ -6,13 +6,13 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:43:04 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 17:03:37 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 04:52:23 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int			is_not_digit(const char *str)
+static int	is_not_digit(const char *str)
 {
 	int		i;
 
@@ -26,7 +26,7 @@ static int			is_not_digit(const char *str)
 	return (0);
 }
 
-static int			get_lvl(const char *str)
+static int	get_lvl(const char *str)
 {
 	int	i;
 	int	sign;

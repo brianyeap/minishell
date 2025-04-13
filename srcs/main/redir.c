@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 17:41:14 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 17:06:39 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:30:35 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	input(t_mini *mini, t_token *token)
 	dup2(mini->fdin, STDIN);
 }
 
-int		minipipe(t_mini *mini)
+int	minipipe(t_mini *mini)
 {
 	pid_t	pid;
 	int		pipefd[2];
@@ -60,7 +60,7 @@ int		minipipe(t_mini *mini)
 		dup2(pipefd[0], STDIN);
 		mini->pipin = pipefd[0];
 		mini->pid = -1;
-		mini->parent = 0; 
+		mini->parent = 0;
 		mini->no_exec = 0;
 		return (2);
 	}

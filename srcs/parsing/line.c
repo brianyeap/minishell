@@ -6,17 +6,17 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:08:10 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 17:08:12 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 04:37:39 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *space_alloc(char *line)
+char	space_alloc(char *line)
 {
-	char *new;
-	int count;
-	int i;
+	char	*new;
+	int		count;
+	int		i;
 
 	count = 0;
 	i = 0;
@@ -26,16 +26,17 @@ char *space_alloc(char *line)
 			count++;
 		i++;
 	}
-	if (!(new = malloc(sizeof(char) * (i + 2 * count + 1))))
+	new = malloc(sizeof(char) * (i + 2 * count + 1));
+	if (!new)
 		return (NULL);
 	return (new);
 }
 
-char *space_line(char *line)
+char	*space_line(char *line)
 {
-	char *new;
-	int i;
-	int j;
+	char	*new;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -60,7 +61,7 @@ char *space_line(char *line)
 	return (new);
 }
 
-int quote_check(t_mini *mini, char **line)
+int	quote_check(t_mini *mini, char **line)
 {
 	if (quotes(*line, 2147483647))
 	{

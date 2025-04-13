@@ -6,13 +6,13 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 16:56:03 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 17:02:21 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 04:43:53 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void		print_error(char **args)
+static void	print_error(char **args)
 {
 	ft_putstr_fd("cd: ", 2);
 	if (args[2])
@@ -25,7 +25,7 @@ static void		print_error(char **args)
 	ft_putendl_fd(args[1], 2);
 }
 
-static char		*get_env_path(t_env *env, const char *var, size_t len)
+static char	*get_env_path(t_env *env, const char *var, size_t len)
 {
 	char	*oldpwd;
 	int		i;
@@ -54,14 +54,15 @@ static char		*get_env_path(t_env *env, const char *var, size_t len)
 	return (NULL);
 }
 
-static int		update_oldpwd(t_env *env)
+static int	update_oldpwd(t_env *env)
 {
 	char	cwd[PATH_MAX];
 	char	*oldpwd;
 
 	if (getcwd(cwd, PATH_MAX) == NULL)
 		return (ERROR);
-	if (!(oldpwd = ft_strjoin("OLDPWD=", cwd)))
+	oldpwd = ft_strjoin("OLDPWD=", cwd);
+	if (!oldpwd)
 		return (ERROR);
 	if (is_in_env(env, oldpwd) == 0)
 		env_add(oldpwd, env);
@@ -69,7 +70,7 @@ static int		update_oldpwd(t_env *env)
 	return (SUCCESS);
 }
 
-static int		go_to_path(int option, t_env *env)
+static int	go_to_path(int option, t_env *env)
 {
 	int		ret;
 	char	*env_path;
@@ -98,7 +99,7 @@ static int		go_to_path(int option, t_env *env)
 	return (ret);
 }
 
-int				ft_cd(char **args, t_env *env)
+int	ft_cd(char **args, t_env *env)
 {
 	int		cd_ret;
 

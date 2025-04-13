@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:57:35 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 17:03:02 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 04:48:15 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static size_t	env_size(char *env)
 	return (i);
 }
 
-static void		free_node(t_mini *mini, t_env *env)
+static void	free_node(t_mini *mini, t_env *env)
 {
 	if (mini->env == env && env->next == NULL)
 	{
@@ -35,7 +35,7 @@ static void		free_node(t_mini *mini, t_env *env)
 	ft_memdel(env);
 }
 
-int				ft_unset(char **a, t_mini *mini)
+int	ft_unset(char **a, t_mini *mini)
 {
 	t_env	*env;
 	t_env	*tmp;
@@ -62,4 +62,3 @@ int				ft_unset(char **a, t_mini *mini)
 	}
 	return (SUCCESS);
 }
-

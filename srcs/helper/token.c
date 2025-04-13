@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:52:31 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 17:05:29 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/12 17:27:07 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_token	*next_cmd(t_token *token, int skip)
 	return (token);
 }
 
-
 t_token	*prev_sep(t_token *token, int skip)
 {
 	if (token && skip)
@@ -46,7 +45,7 @@ t_token	*next_sep(t_token *token, int skip)
 	return (token);
 }
 
-int		next_alloc(char *line, int *i)
+int	next_alloc(char *line, int *i)
 {
 	int		count;
 	int		j;

@@ -6,13 +6,13 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 17:50:25 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 17:03:14 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 04:51:10 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t			size_env(t_env *lst)
+size_t	size_env(t_env *lst)
 {
 	size_t	lst_len;
 
@@ -29,7 +29,7 @@ size_t			size_env(t_env *lst)
 	return (lst_len);
 }
 
-char			*env_to_str(t_env *lst)
+char	*env_to_str(t_env *lst)
 {
 	char	*env;
 	int		i;
@@ -58,13 +58,14 @@ char			*env_to_str(t_env *lst)
 	return (env);
 }
 
-int		init_env(t_mini *mini, char **env_array)
+int	init_env(t_mini *mini, char **env_array)
 {
 	t_env	*env;
 	t_env	*new;
 	int		i;
 
-	if (!(env = malloc(sizeof(t_env))))
+	env = malloc(sizeof(t_env));
+	if (!env)
 		return (1);
 	env->value = ft_strdup(env_array[0]);
 	env->next = NULL;
@@ -72,7 +73,8 @@ int		init_env(t_mini *mini, char **env_array)
 	i = 1;
 	while (env_array && env_array[0] && env_array[i])
 	{
-		if (!(new = malloc(sizeof(t_env))))
+		new = malloc(sizeof(t_env));
+		if (!new)
 			return (1);
 		new->value = ft_strdup(env_array[i]);
 		new->next = NULL;
@@ -83,13 +85,14 @@ int		init_env(t_mini *mini, char **env_array)
 	return (0);
 }
 
-int				init_secret_env(t_mini *mini, char **env_array)
+int	init_secret_env(t_mini *mini, char **env_array)
 {
 	t_env	*env;
 	t_env	*new;
 	int		i;
 
-	if (!(env = malloc(sizeof(t_env))))
+	env = malloc(sizeof(t_env));
+	if (!env)
 		return (1);
 	env->value = ft_strdup(env_array[0]);
 	env->next = NULL;
@@ -97,7 +100,8 @@ int				init_secret_env(t_mini *mini, char **env_array)
 	i = 1;
 	while (env_array && env_array[0] && env_array[i])
 	{
-		if (!(new = malloc(sizeof(t_env))))
+		new = malloc(sizeof(t_env));
+		if (!new)
 			return (1);
 		new->value = ft_strdup(env_array[i]);
 		new->next = NULL;

@@ -6,13 +6,13 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 00:45:36 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 17:02:30 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 04:45:55 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	int		nb_args(char **args)
+static int	nb_args(char **args)
 {
 	int		size;
 
@@ -22,7 +22,7 @@ static	int		nb_args(char **args)
 	return (size);
 }
 
-int				ft_echo(char **args)
+int	ft_echo(char **args)
 {
 	int		i;
 	int		n_option;
