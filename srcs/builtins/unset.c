@@ -6,11 +6,19 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:57:35 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 04:48:15 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 16:55:53 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static	inline t_env	*choose_env(t_env *candidate, t_env *fallback)
+{
+	if (candidate)
+		return (candidate);
+	else
+		return (fallback);
+}
 
 static size_t	env_size(char *env)
 {
@@ -45,7 +53,7 @@ int	ft_unset(char **a, t_mini *mini)
 		return (SUCCESS);
 	if (ft_strncmp(a[1], env->value, env_size(env->value)) == 0)
 	{
-		mini->env = (env->next) ? env->next : mini->env;
+		mini->env = choose_env(env->next, mini->env);
 		free_node(mini, env);
 		return (SUCCESS);
 	}

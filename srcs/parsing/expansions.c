@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 23:25:34 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 04:58:28 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 20:27:10 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,13 @@ static void	insert_var(t_expansions *ex, char *arg, t_env *env, int ret)
 	char	*env_value;
 
 	env_value = get_var_value(arg, ex->j, env, ret);
-	ex->i += env_value ? varlcpy(ex->new_arg, env_value, ex->i) : 0;
+	if (env_value)
+		ex->i += varlcpy(ex->new_arg, env_value, ex->i);
+	else
+		ex->i += 0;
 	ft_memdel(env_value);
-	arg[ex->j] == '?' ? ex->j++ : 0;
+	if (arg[ex->j] == '?')
+		ex->j++;
 	if (ft_isdigit(arg[ex->j]) == 0 && arg[ex->j - 1] != '?')
 	{
 		while (is_env_char(arg[ex->j]) == 1)

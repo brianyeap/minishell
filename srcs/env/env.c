@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 17:50:25 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 04:51:10 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 17:10:57 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ char	*env_to_str(t_env *lst)
 	int		i;
 	int		j;
 
-	if (!(env = malloc(sizeof(char) * size_env(lst) + 1)))
+	env = malloc(sizeof(char) * size_env(lst) + 1);
+	if (!env)
 		return (NULL);
 	i = 0;
 	while (lst && lst->next != NULL)
@@ -45,9 +46,7 @@ char	*env_to_str(t_env *lst)
 			j = 0;
 			while (lst->value[j])
 			{
-				env[i] = lst->value[j];
-				i++;
-				j++;
+				env[i++] = lst->value[j++];
 			}
 		}
 		if (lst->next->next != NULL)

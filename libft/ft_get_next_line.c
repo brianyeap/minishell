@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:26:28 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 05:19:18 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 22:03:40 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,26 +113,18 @@ int	get_next_line(int fd, char **line)
 	int			read_len;
 	char		buf[BUFFER_SIZE + 1];
 	static char	*stock = NULL;
+	int			ret;
 
 	if (line == NULL || fd < 0 || BUFFER_SIZE < 1 || (read(fd, buf, 0)) < 0)
 		return (-1);
-	read_len = 1;
-	while (!(newline_check(stock, read_len)))
-	{
-		read_len = read(fd, buf, BUFFER_SIZE);
-		if (read_len == -1)
-			return (-1);
-		buf[read_len] = '\0';
-		(read_len == 0 || buf[read_len - 1] != '\n') ? ft_printf("  \b\b") : 0;
-		if ((stock = buf_join(stock, buf)) == NULL)
-			return (-1);
-	}
-	if (newline_check(stock, read_len) == 2 && (*line = stock))
-		return (-2);
-	if ((*line = get_line(stock)) == NULL)
+	read_len = read_to_stock(fd, &stock);
+	if (read_len == -1)
 		return (-1);
-	if ((stock = stock_trim(stock)))
-		return (-1);
+	ret = process_stock(&stock, line, read_len);
+	if (ret != 0)
+		return (ret);
 	ft_memdel(stock);
-	return (read_len != 0 ? 1 : 0);
+	if (read_len != 0)
+		return (1);
+	return (0);
 }

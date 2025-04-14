@@ -6,11 +6,19 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:11:20 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 17:31:55 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 21:44:03 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static inline t_token	*s(t_token *cond, t_token *if_t, t_token *if_f)
+{
+	if (cond)
+		return (if_t);
+	else
+		return (if_f);
+}
 
 void	type_arg(t_token *token, int separator)
 {
@@ -49,10 +57,10 @@ void	squish_args(t_mini *mini)
 			if (token->next)
 				token->next->prev = token->prev;
 			token->prev = prev;
-			token->next = (prev) ? prev->next : mini->start;
+			token->next = s(prev, prev->next, mini->start);
 			prev->next->prev = token;
-			prev->next = (mini->start->prev) ? prev->next : token;
-			mini->start = (mini->start->prev) ? mini->start->prev : mini->start;
+			prev->next = s(mini->start->prev, prev->next, token);
+			mini->start = s(mini->start->prev, mini->start->prev, mini->start);
 		}
 		token = token->next;
 	}
@@ -61,29 +69,14 @@ void	squish_args(t_mini *mini)
 t_token	*next_token(char *line, int *i)
 {
 	t_token	*token;
-	int		j;
-	char	c;
 
-	j = 0;
-	c = ' ';
-	if (!(token = malloc(sizeof(t_token)))
-		|| !(token->str = malloc(sizeof(char) * next_alloc(line, i))))
+	token = malloc(sizeof(t_token));
+	if (!token)
 		return (NULL);
-	while (line[*i] && (line[*i] != ' ' || c != ' '))
-	{
-		if (c == ' ' && (line[*i] == '\'' || line[*i] == '\"'))
-			c = line[(*i)++];
-		else if (c != ' ' && line[*i] == c)
-		{
-			c = ' ';
-			(*i)++;
-		}
-		else if (line[*i] == '\\' && (*i)++)
-			token->str[j++] = line[(*i)++];
-		else
-			token->str[j++] = line[(*i)++];
-	}
-	token->str[j] = '\0';
+	token->str = malloc(sizeof(char) * next_alloc(line, i));
+	if (!token->str)
+		return (NULL);
+	fill_token(line, i, token);
 	return (token);
 }
 

@@ -6,13 +6,13 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:08:10 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 04:37:39 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 22:26:44 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	space_alloc(char *line)
+char	*space_alloc(char *line)
 {
 	char	*new;
 	int		count;
@@ -81,11 +81,11 @@ void	parse(t_mini *mini)
 
 	signal(SIGINT, &sig_int);
 	signal(SIGQUIT, &sig_quit);
-	mini->ret ? ft_putstr_fd("🤬 ", STDERR) : ft_putstr_fd("😎 ", STDERR);
+	output_emoji(mini->ret);
 	ft_putstr_fd("\033[0;36m\033[1mminishell ▸ \033[0m", STDERR);
-	if (get_next_line(0, &line) == -2 && (mini->exit = 1))
+	if (get_next_line(0, &line) == -2 && (mini->exit == 1))
 		ft_putendl_fd("exit", STDERR);
-	mini->ret = (g_sig.sigint == 1) ? g_sig.exit_status : mini->ret;
+	mini->ret = mini_ret((mini->sig.sigint == 1), mini->sig.exit_status, mini->ret);
 	if (quote_check(mini, &line))
 		return ;
 	line = space_line(line);

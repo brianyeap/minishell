@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 18:12:13 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 05:21:31 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 22:04:07 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,12 @@ void	ft_skip_is_space(const char *str, int *i);
 int		get_next_line(int fd, char **line);
 int		ft_strisnum(const char *str);
 void	ft_putendl(char *s);
+int		process_stock(char **stock, char **line, int read_len);
+int		newline_check(char *stock, int read_size);
+char	*get_line(char *stock);
+char	*stock_trim(char *stock);
+int		process_stock(char **stock, char **line, int read_len);
+int		read_to_stock(int fd, char **stock);
+char	*buf_join(char *stock, char *buf);
 
 #endif

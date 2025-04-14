@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:07:21 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 05:07:57 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 23:16:16 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ typedef struct s_sig
 	pid_t	pid;
 }	t_sig;
 
+t_sig	g_sig;
+
 typedef struct s_expansions
 {
 	char	*new_arg;
@@ -104,10 +106,8 @@ typedef struct s_mini
 	int			ret;
 	int			exit;
 	int			no_exec;
+	t_sig    sig;
 }	t_mini;
-
-// Setting global variable
-t_sig	g_sig;
 
 // Builtins
 char		*get_env_value(char *arg, t_env *env);
@@ -120,6 +120,7 @@ int			ft_export(char **args, t_env *env, t_env *secret);
 int			ft_unset(char **a, t_mini *mini);
 int			env_add(const char *value, t_env *env);
 int			is_in_env(t_env *env, char *args);
+int			choose_new_env(int error_ret, t_env *env, char *arg);
 
 // Helper
 void		reset_fds(t_mini *mini);
@@ -127,6 +128,7 @@ int			quotes(char *line, int index);
 t_token		*prev_sep(t_token *token, int skip);
 int			is_type(t_token *token, int type);
 char		*get_var_value(const char *arg, int pos, t_env *env, int ret);
+void		print_token_or_newline(t_token *token);
 
 // Envs
 int			init_env(t_mini *mini, char **env_array);
@@ -149,6 +151,9 @@ int			check_line(t_mini *mini, t_token *token);
 int			is_seperator(char *line, int i);
 int			arg_alloc_len(const char *arg, t_env *env, int ret);
 char		*expansions(char *arg, t_env *env, int ret);
+void		output_emoji(int ret);
+int			mini_ret(int cond, int true_val, int false_val);
+void		fill_token(char *line, int *i, t_token *token);
 
 // Tokens
 t_token		*get_tokens(char *line);
@@ -194,5 +199,8 @@ int			exec_builtin(char **args, t_mini *mini);
 int			is_builtin(char *command);
 int			exec_bin(char **args, t_env *env, t_mini *mini);
 void		exec_cmd(t_mini *mini, t_token *token);
+int			normalize_exit_code(int ret);
+
+// void set_global_mini(t_mini *mini);
 
 #endif

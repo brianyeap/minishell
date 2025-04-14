@@ -6,13 +6,27 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:07:25 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 17:29:15 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 23:16:21 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_sig	g_sig;
+static inline t_token	*t_k(int cond, t_token *t_v, t_token *f_l)
+{
+	if (cond)
+		return (t_v);
+	else
+		return (f_l);
+}
+
+static inline int	ternary_int(int cond, int true_val, int false_val)
+{
+	if (cond)
+		return (true_val);
+	else
+		return (false_val);
+}
 
 void	redir_and_exec(t_mini *mini, t_token *token)
 {
@@ -44,7 +58,7 @@ void	minishell(t_mini *mini)
 	int		status;
 
 	token = next_cmd(mini->start, NOSKIP);
-	token = (is_types(mini->start, "TAI")) ? mini->start->next : token;
+	token = t_k(is_types(mini->start, "TAI"), mini->start->next, token);
 	while (mini->exit == 0 && token)
 	{
 		mini->charge = 1;
@@ -56,7 +70,7 @@ void	minishell(t_mini *mini)
 		reset_fds(mini);
 		waitpid(-1, &status, 0);
 		status = WEXITSTATUS(status);
-		mini->ret = (mini->last == 0) ? status : mini->ret;
+		mini->ret = ternary_int((mini->last == 0), status, mini->ret);
 		if (mini->parent == 0)
 		{
 			free_token(mini->start);

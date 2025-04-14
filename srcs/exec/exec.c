@@ -6,11 +6,24 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 23:24:40 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 17:04:43 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 17:19:07 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	count_valid_tokens(t_token *token)
+{
+	int	i;
+
+	i = 0;
+	while (token && token->type < TRUNC)
+	{
+		token = token->next;
+		i++;
+	}
+	return (i);
+}
 
 char	**cmd_tab(t_token *start)
 {
@@ -21,13 +34,9 @@ char	**cmd_tab(t_token *start)
 	if (!start)
 		return (NULL);
 	token = start->next;
-	i = 2;
-	while (token && token->type < TRUNC)
-	{
-		token = token->next;
-		i++;
-	}
-	if (!(tab = malloc(sizeof(char *) * i)))
+	i = count_valid_tokens(token) + 2;
+	tab = malloc(sizeof(char *) * i);
+	if (!tab)
 		return (NULL);
 	token = start->next;
 	tab[0] = start->str;

@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:08:41 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 04:55:46 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 22:19:13 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	magic_box(char *path, char **args, t_env *env, t_mini *mini)
 	int		ret;
 
 	ret = SUCCESS;
-	g_sig.pid = fork();
-	if (g_sig.pid == 0)
+	mini->sig.pid = fork();
+	if (mini->sig.pid == 0)
 	{
 		ptr = env_to_str(env);
 		env_array = ft_split(ptr, '\n');
@@ -61,10 +61,10 @@ int	magic_box(char *path, char **args, t_env *env, t_mini *mini)
 		exit(ret);
 	}
 	else
-		waitpid(g_sig.pid, &ret, 0);
-	if (g_sig.sigint == 1 || g_sig.sigquit == 1)
-		return (g_sig.exit_status);
-	ret = (ret == 32256 || ret == 32512) ? ret / 256 : !!ret;
+		waitpid(mini->sig.pid, &ret, 0);
+	if (mini->sig.sigint == 1 || mini->sig.sigquit == 1)
+		return (mini->sig.exit_status);
+	ret = normalize_exit_code(ret);
 	return (ret);
 }
 
@@ -89,10 +89,12 @@ char	*check_dir(char *bin, char *command)
 	folder = opendir(bin);
 	if (!folder)
 		return (NULL);
-	while ((item = readdir(folder)))
+	item = readdir(folder);
+	while (item != NULL)
 	{
 		if (ft_strcmp(item->d_name, command) == 0)
 			path = path_join(bin, item->d_name);
+		item = readdir(folder);
 	}
 	closedir(folder);
 	return (path);

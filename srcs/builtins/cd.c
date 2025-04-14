@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 16:56:03 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 04:43:53 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 17:08:28 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,13 @@ static char	*get_env_path(t_env *env, const char *var, size_t len)
 	char	*oldpwd;
 	int		i;
 	int		j;
-	int		s_alloc;
 
 	while (env && env->next != NULL)
 	{
 		if (ft_strncmp(env->value, var, len) == 0)
 		{
-			s_alloc = ft_strlen(env->value) - len;
-			if (!(oldpwd = malloc(sizeof(char) * s_alloc + 1)))
+			oldpwd = malloc(sizeof(char) * (ft_strlen(env->value) - len) + 1);
+			if (!oldpwd)
 				return (NULL);
 			i = 0;
 			j = 0;

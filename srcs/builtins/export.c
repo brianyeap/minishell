@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:19:07 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 04:47:30 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 17:00:49 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	ft_export(char **args, t_env *env, t_env *secret)
 			error_ret = -3;
 		if (error_ret <= 0)
 			return (print_error(error_ret, args[1]));
-		new_env = error_ret == 2 ? 1 : is_in_env(env, args[1]);
+		new_env = choose_new_env(error_ret, env, args[1]);
 		if (new_env == 0)
 		{
 			if (error_ret == 1)

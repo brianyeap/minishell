@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:55:03 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 05:15:53 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/14 17:32:56 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ int	check_line(t_mini *mini, t_token *token)
 				|| is_types(token->next, "TAIPE")))
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
-			token->next ? ft_putstr_fd(token->next->str, STDERR) : 0;
-			token->next ? 0 : ft_putstr_fd("newline", STDERR);
+			print_token_or_newline(token->next);
 			ft_putendl_fd("'", STDERR);
 			mini->ret = 258;
 			return (0);
