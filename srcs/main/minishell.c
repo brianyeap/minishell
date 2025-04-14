@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:07:25 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 23:16:21 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/15 03:12:22 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,31 +81,31 @@ void	minishell(t_mini *mini)
 	}
 }
 
-int	main(int argc, char **argv, char **env)
+int main(int argc, char **argv, char **env)
 {
-	t_mini	mini;
+    t_mini  mini;
 
-	(void)argc;
-	(void)argv;
-	(void)env;
-	mini.in = dup(STDIN);
-	mini.out = dup(STDOUT);
-	mini.exit = 0;
-	mini.ret = 0;
-	mini.no_exec = 0;
-	reset_fds(&mini);
-	init_env(&mini, env);
-	init_secret_env(&mini, env);
-	increment_shell(mini.env);
-	while (mini.exit == 0)
-	{
-		sig_init();
-		parse(&mini);
-		if (mini.start != NULL && check_line(&mini, mini.start))
-			minishell(&mini);
-		free_token(mini.start);
-	}
-	free_env(mini.env);
-	free_env(mini.secret_env);
-	return (mini.ret);
+    (void)argc;
+    (void)argv;
+    (void)env;
+    mini.in = dup(STDIN);
+    mini.out = dup(STDOUT);
+    mini.exit = 0;
+    mini.ret = 0;
+    mini.no_exec = 0;
+    reset_fds(&mini);
+    init_env(&mini, env);
+    init_secret_env(&mini, env);
+    increment_shell(mini.env);
+    while (mini.exit == 0)
+    {
+        sig_init(&mini);  // Initialize signal handler with mini instance
+        parse(&mini);
+        if (mini.start != NULL && check_line(&mini, mini.start))
+            minishell(&mini);
+        free_token(mini.start);
+    }
+    free_env(mini.env);
+    free_env(mini.secret_env);
+    return (mini.ret);
 }

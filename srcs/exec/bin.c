@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:08:41 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 22:19:13 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/15 03:13:38 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	magic_box(char *path, char **args, t_env *env, t_mini *mini)
 	int		ret;
 
 	ret = SUCCESS;
-	mini->sig.pid = fork();
-	if (mini->sig.pid == 0)
+	mini->pid = fork();
+	if (mini->pid == 0)
 	{
 		ptr = env_to_str(env);
 		env_array = ft_split(ptr, '\n');
@@ -61,9 +61,9 @@ int	magic_box(char *path, char **args, t_env *env, t_mini *mini)
 		exit(ret);
 	}
 	else
-		waitpid(mini->sig.pid, &ret, 0);
-	if (mini->sig.sigint == 1 || mini->sig.sigquit == 1)
-		return (mini->sig.exit_status);
+		waitpid(mini->pid, &ret, 0);
+	if (mini->sigint == 1 || mini->sigquit == 1)
+		return (mini->exit_status);
 	ret = normalize_exit_code(ret);
 	return (ret);
 }

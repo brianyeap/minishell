@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:07:21 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 23:16:16 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/15 03:12:44 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,24 +90,29 @@ typedef struct s_expansions
 
 typedef struct s_mini
 {
-	t_token		*start;
-	t_env		*env;
-	t_env		*secret_env;
-	int			in;
-	int			out;
-	int			fdin;
-	int			fdout;
-	int			pipin;
-	int			pipout;
-	int			pid;
-	int			charge;
-	int			parent;
-	int			last;
-	int			ret;
-	int			exit;
-	int			no_exec;
-	t_sig    sig;
-}	t_mini;
+    t_token     *start;
+    t_env       *env;
+    t_env       *secret_env;
+    int         in;
+    int         out;
+    int         fdin;
+    int         fdout;
+    int         pipin;
+    int         pipout;
+    int         pid;            // Moved from g_sig.pid
+    int         charge;
+    int         parent;
+    int         last;
+    int         ret;
+    int         exit;
+    int         no_exec;    
+    int         sigint;         // Flag for SIGINT
+    int         sigquit;        // Flag for SIGQUIT
+    int         exit_status;    // Exit status of last command    
+    int         in_cmd;         // Flag for when executing a command
+    int         in_heredoc;     // Flag for when in heredoc input mode
+} t_mini;
+
 
 // Builtins
 char		*get_env_value(char *arg, t_env *env);
@@ -140,7 +145,7 @@ int			is_valid_env(const char *env);
 void		print_sorted_env(t_env *env);
 
 // Signals
-void		sig_init(void);
+void    sig_init(t_mini *mini);
 void		sig_int(int code);
 void		sig_quit(int code);
 
