@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:15:49 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 21:02:48 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/16 06:25:11 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,27 @@ int	mini_ret(int cond, int true_val, int false_val)
 		return (false_val);
 }
 
+// handles ' " and '\' escaped chars
 void	fill_token(char *line, int *i, t_token *token)
 {
 	int		j;
-	char	c;
+	char	c; // tracking quote
 
 	j = 0;
 	c = ' ';
 	while (line[*i] && (line[*i] != ' ' || c != ' '))
 	{
 		if (c == ' ' && (line[*i] == '\'' || line[*i] == '\"'))
-			c = line[(*i)++];
-		else if (c != ' ' && line[*i] == c)
+			c = line[(*i)++]; // set to the quote
+		else if (c != ' ' && line[*i] == c)  // close quote
 		{
 			c = ' ';
 			(*i)++;
 		}
-		else if (line[*i] == '\\' && (*i)++)
-			token->str[j++] = line[(*i)++];
+		else if (line[*i] == '\\' && (*i)++) // handles escaped chars
+			token->str[j++] = line[(*i)++]; // copy the next
 		else
-			token->str[j++] = line[(*i)++];
+			token->str[j++] = line[(*i)++]; // normal cahr
 	}
 	token->str[j] = '\0';
 }
