@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:57:35 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 16:55:53 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/15 19:14:30 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,17 @@ int	ft_unset(char **a, t_mini *mini)
 	env = mini->env;
 	if (!(a[1]))
 		return (SUCCESS);
+	// check if firsr node match variable unset
 	if (ft_strncmp(a[1], env->value, env_size(env->value)) == 0)
 	{
-		mini->env = choose_env(env->next, mini->env);
+		mini->env = choose_env(env->next, mini->env); 
 		free_node(mini, env);
 		return (SUCCESS);
 	}
+	// Traverse the list to find the variable to unset
 	while (env && env->next)
 	{
+		// unsetting it
 		if (ft_strncmp(a[1], env->next->value, env_size(env->next->value)) == 0)
 		{
 			tmp = env->next->next;

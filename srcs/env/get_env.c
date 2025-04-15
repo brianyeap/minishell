@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:16:05 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 04:51:59 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/15 19:30:19 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ int	is_valid_env(const char *env)
 	int		i;
 
 	i = 0;
-	if (ft_isdigit(env[i]) == 1)
+	if (ft_isdigit(env[i]) == 1) // can't start with a digit
 		return (0);
 	while (env[i] && env[i] != '=')
 	{
-		if (ft_isalnum(env[i]) == 0)
+		if (ft_isalnum(env[i]) == 0) // must be alphanumerical or "_"
 			return (-1);
 		i++;
 	}
-	if (env[i] != '=')
+	if (env[i] != '=') // must contain =
 		return (2);
 	return (1);
 }
@@ -86,10 +86,10 @@ char	*get_env_value(char *arg, t_env *env)
 	while (env && env->value)
 	{
 		get_env_key(env_key_name, env->value);
-		if (ft_strcmp(arg, env_key_name) == 0)
+		if (ft_strcmp(arg, env_key_name) == 0) // compare the keya nd arg
 		{
 			ft_memdel(env_val);
-			env_val = env_value(env->value);
+			env_val = env_value(env->value); // get the value
 			return (env_val);
 		}
 		env = env->next;

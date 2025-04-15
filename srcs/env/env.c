@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 17:50:25 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 17:10:57 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/15 19:26:38 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ size_t	size_env(t_env *lst)
 	return (lst_len);
 }
 
+// convert linked list to string
 char	*env_to_str(t_env *lst)
 {
 	char	*env;
@@ -57,6 +58,7 @@ char	*env_to_str(t_env *lst)
 	return (env);
 }
 
+// array of enc to linked list
 int	init_env(t_mini *mini, char **env_array)
 {
 	t_env	*env;
@@ -84,6 +86,7 @@ int	init_env(t_mini *mini, char **env_array)
 	return (0);
 }
 
+// same
 int	init_secret_env(t_mini *mini, char **env_array)
 {
 	t_env	*env;

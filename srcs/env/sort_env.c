@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:00:29 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 04:53:06 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/15 19:39:11 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	str_env_len(char **env)
 	return (i);
 }
 
+// buble sort to sort in alphabetical order
 void	sort_env(char **tab, int env_len)
 {
 	int		ordered;
@@ -48,6 +49,7 @@ void	sort_env(char **tab, int env_len)
 	}
 }
 
+// print the env in sorted order
 void	print_sorted_env(t_env *env)
 {
 	int		i;
@@ -61,7 +63,7 @@ void	print_sorted_env(t_env *env)
 	i = 0;
 	while (tab[i])
 	{
-		ft_putstr("declare -x ");
+		ft_putstr("declare -x "); // mimic shell behaciour
 		ft_putendl(tab[i]);
 		i++;
 	}

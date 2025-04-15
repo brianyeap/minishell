@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:08:41 by brian             #+#    #+#             */
-/*   Updated: 2025/04/15 03:13:38 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/16 02:36:27 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	error_message(char *path)
 	int	fd;
 	int	ret;
 
-	fd = open(path, O_WRONLY);
-	folder = opendir(path);
+	fd = open(path, O_WRONLY); // open path as file
+	folder = opendir(path);  // open path as directory
 	ft_putstr_fd("minishell: ", STDERR);
 	ft_putstr_fd(path, STDERR);
 	if (ft_strchr(path, '/') == NULL)
@@ -47,21 +47,21 @@ int	magic_box(char *path, char **args, t_env *env, t_mini *mini)
 	int		ret;
 
 	ret = SUCCESS;
-	mini->pid = fork();
-	if (mini->pid == 0)
+	mini->pid = fork(); // Create child process
+	if (mini->pid == 0) // inside child process
 	{
-		ptr = env_to_str(env);
-		env_array = ft_split(ptr, '\n');
+		ptr = env_to_str(env);  // Convert the env to string
+		env_array = ft_split(ptr, '\n'); // Split str into array
 		ft_memdel(ptr);
 		if (ft_strchr(path, '/') != NULL)
-			execve(path, args, env_array);
+			execve(path, args, env_array); // exc coomand 
 		ret = error_message(path);
 		free_tab(env_array);
 		free_token(mini->start);
 		exit(ret);
 	}
 	else
-		waitpid(mini->pid, &ret, 0);
+		waitpid(mini->pid, &ret, 0); // wait f child
 	if (mini->sigint == 1 || mini->sigquit == 1)
 		return (mini->exit_status);
 	ret = normalize_exit_code(ret);
@@ -92,11 +92,11 @@ char	*check_dir(char *bin, char *command)
 	item = readdir(folder);
 	while (item != NULL)
 	{
-		if (ft_strcmp(item->d_name, command) == 0)
+		if (ft_strcmp(item->d_name, command) == 0) // check if cmd matches
 			path = path_join(bin, item->d_name);
 		item = readdir(folder);
 	}
-	closedir(folder);
+	closedir(folder); // close the dir
 	return (path);
 }
 
@@ -110,20 +110,20 @@ int	exec_bin(char **args, t_env *env, t_mini *mini)
 	i = 0;
 	ret = UNKNOWN_COMMAND;
 	while (env && env->value && ft_strncmp(env->value, "PATH=", 5) != 0)
-		env = env->next;
+		env = env->next; // find the path var in env 
 	if (env == NULL || env->next == NULL)
-		return (magic_box(args[0], args, env, mini));
-	bin = ft_split(env->value, ':');
+		return (magic_box(args[0], args, env, mini));  // exc if no path, bascically yolo and just try
+	bin = ft_split(env->value, ':'); // split the path into dirs
 	if (!args[0] && !bin[0])
 		return (ERROR);
 	i = 1;
-	path = check_dir(bin[0] + 5, args[0]);
-	while (args[0] && bin[i] && path == NULL)
+	path = check_dir(bin[0] + 5, args[0]); // check the first dir but remove the PATH= part
+	while (args[0] && bin[i] && path == NULL) // check the rest of the dirs
 		path = check_dir(bin[i++], args[0]);
 	if (path != NULL)
-		ret = magic_box(path, args, env, mini);
+		ret = magic_box(path, args, env, mini); // exc	if fouind
 	else
-		ret = magic_box(args[0], args, env, mini);
+		ret = magic_box(args[0], args, env, mini); // exc if not found
 	free_tab(bin);
 	ft_memdel(path);
 	return (ret);

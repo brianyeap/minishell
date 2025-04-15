@@ -6,12 +6,13 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:55:03 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 17:32:56 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/16 03:23:39 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// chec is inside quote single or double
 int	quotes(char *line, int index)
 {
 	int	i;
@@ -33,15 +34,15 @@ int	quotes(char *line, int index)
 			open = 0;
 		i++;
 	}
-	return (open);
+	return (open); // 0if not inside, 1 for "", 2 for ''
 }
 
 int	is_seperator(char *line, int i)
 {
 	if (i > 0 && line[i - 1] == '\\' && ft_strchr("<>|;", line[i]))
-		return (0);
+		return (0);// Ignore escaped separators
 	else if (ft_strchr("<>|;", line[i]) && quotes(line, i) == 0)
-		return (1);
+		return (1);// Valid separator outside quotes
 	else
 		return (0);
 }
@@ -61,6 +62,7 @@ int	is_last_valid_arg(t_token *token)
 		return (0);
 }
 
+// check if it is escaped
 int	ignore_sep(char *line, int i)
 {
 	if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == ';')
@@ -80,12 +82,12 @@ int	check_line(t_mini *mini, t_token *token)
 	while (token)
 	{
 		if (is_types(token, "TAI") && (!token->next
-				|| is_types(token->next, "TAIPE")))
+				|| is_types(token->next, "TAIPE"))) // make sure next is not empty and not TAIPE
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
 			print_token_or_newline(token->next);
 			ft_putendl_fd("'", STDERR);
-			mini->ret = 258;
+			mini->ret = 258; // syntax error
 			return (0);
 		}
 		if (is_types(token, "PE") && (!token->prev || !token->next
