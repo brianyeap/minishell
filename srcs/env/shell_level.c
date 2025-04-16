@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:43:04 by brian             #+#    #+#             */
-/*   Updated: 2025/04/15 19:36:17 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/16 20:41:44 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ void	increment_shell(t_env *env)
 
 	shell_level_value = get_env_value("SHLVL", env); // get the value of SHLVL
 	if (ft_strcmp(shell_level_value, "") == 0) // if shlvl is not set 
+	{
+		ft_memdel(shell_level_value);
 		return ;
+	}
 	shell_level = get_lvl(shell_level_value) + 1; // add one
 	ft_memdel(shell_level_value);
 	while (env && env->next)
