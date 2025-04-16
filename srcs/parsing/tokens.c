@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:11:20 by brian             #+#    #+#             */
-/*   Updated: 2025/04/16 06:16:46 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/16 19:26:03 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	type_arg(t_token *token, int separator)
 }
 
 
+// ensure that args (file.txt) are linked to the right redirection
 void	squish_args(t_mini *mini)
 {
 	t_token	*token;
