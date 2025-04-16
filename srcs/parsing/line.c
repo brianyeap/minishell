@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:08:10 by brian             #+#    #+#             */
-/*   Updated: 2025/04/15 03:14:28 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/16 19:52:27 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ void	parse(t_mini *mini)
 	signal(SIGQUIT, &sig_quit);
 	output_emoji(mini->ret);
 	ft_putstr_fd("\033[0;36m\033[1mminishell ▸ \033[0m", STDERR);
-	if (get_next_line(0, &line) == -2 && (mini->exit == 1))
-		ft_putendl_fd("exit", STDERR);
+	if (get_next_line(0, &line) == -2)
+		error_and_quit(mini);
 	mini->ret = mini_ret((mini->sigint == 1), mini->exit_status, mini->ret);
 	if (quote_check(mini, &line))
 		return ;
