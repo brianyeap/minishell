@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:43:04 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 04:52:23 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/16 20:49:45 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,15 @@ static int	get_lvl(const char *str)
 	return (num * sign);
 }
 
+int	increment_shell_level(char *val)
+{
+	int		shell_level;
+
+	shell_level = get_lvl(val) + 1;
+	ft_memdel(val);
+	return (shell_level);
+}
+
 void	increment_shell(t_env *env)
 {
 	int		shell_level;
@@ -56,9 +65,11 @@ void	increment_shell(t_env *env)
 
 	shell_level_value = get_env_value("SHLVL", env);
 	if (ft_strcmp(shell_level_value, "") == 0)
+	{
+		ft_memdel(shell_level_value);
 		return ;
-	shell_level = get_lvl(shell_level_value) + 1;
-	ft_memdel(shell_level_value);
+	}
+	shell_level = increment_shell_level(shell_level_value);
 	while (env && env->next)
 	{
 		get_env_key(env_name, env->value);
