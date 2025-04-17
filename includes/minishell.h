@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:07:21 by brian             #+#    #+#             */
-/*   Updated: 2025/04/15 03:59:43 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/17 16:43:27 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <limits.h>
 # include <errno.h>
 # include <signal.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 # define STDIN 0
 # define STDOUT 1
@@ -202,5 +204,7 @@ int			is_builtin(char *command);
 int			exec_bin(char **args, t_env *env, t_mini *mini);
 void		exec_cmd(t_mini *mini, t_token *token);
 int			normalize_exit_code(int ret);
+
+void	error_and_exit(t_mini *mini);
 
 #endif

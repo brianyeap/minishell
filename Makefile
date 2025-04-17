@@ -17,7 +17,7 @@ INCLUDES = -I$(INC_DIR)
 all: $(NAME)
 
 $(NAME): $(OFILES)
-	$(Compiler) $(Flags) -o $(NAME) $(OFILES)
+	$(Compiler) $(Flags) -o $(NAME) $(OFILES) -lreadline
 
 %.o: %.c
 	$(Compiler) $(Flags) -c $< -o $@ $(INCLUDES)
