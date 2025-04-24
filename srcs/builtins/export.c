@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:19:07 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 17:00:49 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/23 20:24:35 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,14 @@ char	*get_env_key(char *dest, const char *src)
 	return (dest);
 }
 
+// return 1 if exist/updates value, 0 if not exist
 int	is_in_env(t_env *env, char *args)
 {
 	char	var_name[BUFF_SIZE];
 	char	env_name[BUFF_SIZE];
 
 	get_env_key(var_name, args);
-	while (env && env->next)
+	while (env)
 	{
 		get_env_key(env_name, env->value);
 		if (ft_strcmp(var_name, env_name) == 0)
@@ -86,6 +87,8 @@ int	is_in_env(t_env *env, char *args)
 	return (SUCCESS);
 }
 
+// Diffrence between env and secret is that secret is print when doing export with no args
+// it is also sorted and can out put env with no value
 int	ft_export(char **args, t_env *env, t_env *secret)
 {
 	int		new_env;
@@ -99,17 +102,17 @@ int	ft_export(char **args, t_env *env, t_env *secret)
 	}
 	else
 	{
-		error_ret = is_valid_env(args[1]);
+		error_ret = is_valid_env(args[1]); // -1 invalid char, 0 starts witn digit, 2 valid var name but no addignment, 1= valid
 		if (args[1][0] == '=')
 			error_ret = -3;
 		if (error_ret <= 0)
 			return (print_error(error_ret, args[1]));
-		new_env = choose_new_env(error_ret, env, args[1]);
+		new_env = choose_new_env(error_ret, env, args[1]);  // 1 for exist and 0 for not
 		if (new_env == 0)
 		{
-			if (error_ret == 1)
+			if (error_ret == 1)  // if valid
 				env_add(args[1], env);
-			env_add(args[1], secret);
+			env_add(args[1], secret); // incase no value is provided, we will add to secret
 		}
 	}
 	return (SUCCESS);

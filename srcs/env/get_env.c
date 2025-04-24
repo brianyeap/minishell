@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:16:05 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 04:51:59 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/23 20:03:15 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ int	is_valid_env(const char *env)
 
 	i = 0;
 	if (ft_isdigit(env[i]) == 1)
-		return (0);
+		return (0);  // can't start with a digit
 	while (env[i] && env[i] != '=')
 	{
 		if (ft_isalnum(env[i]) == 0)
 			return (-1);
 		i++;
 	}
-	if (env[i] != '=')
+	if (env[i] != '=')  // for example export foo, allowed but i signal it with 2
 		return (2);
 	return (1);
 }

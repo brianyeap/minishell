@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:15:49 by brian             #+#    #+#             */
-/*   Updated: 2025/04/16 19:52:53 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/23 23:02:48 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	fill_token(char *line, int *i, t_token *token)
 	char	c;
 
 	j = 0;
-	c = ' ';
+	c = ' '; // quote tracker
 	while (line[*i] && (line[*i] != ' ' || c != ' '))
 	{
 		if (c == ' ' && (line[*i] == '\'' || line[*i] == '\"'))
@@ -45,9 +45,9 @@ void	fill_token(char *line, int *i, t_token *token)
 			(*i)++;
 		}
 		else if (line[*i] == '\\' && (*i)++)
-			token->str[j++] = line[(*i)++];
+			token->str[j++] = line[(*i)++]; // skip it then set the cahr
 		else
-			token->str[j++] = line[(*i)++];
+			token->str[j++] = line[(*i)++]; // just copy
 	}
 	token->str[j] = '\0';
 }

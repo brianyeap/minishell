@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:08:10 by brian             #+#    #+#             */
-/*   Updated: 2025/04/16 19:52:27 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/24 18:09:13 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,27 @@ char	*space_alloc(char *line)
 	return (new);
 }
 
+// This function is incase the raw input is joined tgt like "ls|cat|grep"
+// It will add spaces around the sepereator so that it is easier to tokenize
 char	*space_line(char *line)
 {
 	char	*new;
 	int		i;
 	int		j;
 
-	i = 0;
-	j = 0;
-	new = space_alloc(line);
+	i = 0; // index for ori line
+	j = 0; // index for new line
+	new = space_alloc(line); // allocate space for new line
 	while (new && line[i])
 	{
-		if (quotes(line, i) != 2 && line[i] == '$' && i && line[i - 1] != '\\')
-			new[j++] = (char)(-line[i++]);
-		else if (quotes(line, i) == 0 && is_seperator(line, i))
+		if (quotes(line, i) != 2 && line[i] == '$' && i && line[i - 1] != '\\') // checking the $ is not inside single quotes and it is not escaped
+			new[j++] = (char)(-line[i++]); // marking it negative which is -36 == EXPANSION in the header file
+		else if (quotes(line, i) == 0 && is_seperator(line, i)) // we are not in quotes and this cahr is a seperator
 		{
 			new[j++] = ' ';
 			new[j++] = line[i++];
 			if (quotes(line, i) == 0 && line[i] == '>')
-				new[j++] = line[i++];
+				new[j++] = line[i++]; // this is for if it is a >>
 			new[j++] = ' ';
 		}
 		else
@@ -79,26 +81,18 @@ void	parse(t_mini *mini)
 	char	*line;
 	t_token	*token;
 
-	signal(SIGINT, &sig_int);
-	signal(SIGQUIT, &sig_quit);
+	signal(SIGINT, &sig_int); // Ctrl + c
+	signal(SIGQUIT, &sig_quit); // Ctrl + '\'
 	output_emoji(mini->ret);
 	ft_putstr_fd("\033[0;36m\033[1mminishell ▸ \033[0m", STDERR);
-	if (get_next_line(0, &line) == -2)
+	if (get_next_line(0, &line) == -2) // Ctrl + d for EOF
 		error_and_quit(mini);
-	mini->ret = mini_ret((mini->sigint == 1), mini->exit_status, mini->ret);
-	if (quote_check(mini, &line))
+	mini->ret = mini_ret((mini->sigint == 1), mini->exit_status, mini->ret); // if sigint then set the exit staus
+	if (quote_check(mini, &line)) // check for open quotes
 		return ;
-	line = space_line(line);
-	if (line && line[0] == '$')
-		line[0] = (char)(-line[0]);
-	mini->start = get_tokens(line);
+	line = space_line(line); // space line so it is easier to tokenize
+	if (line && line[0] == '$')  // even thought in space line we already marked the $ but it doesnt mark the first $ becaise of the -1 check for the '\'
+		line[0] = (char)(-line[0]); // marking it negative which is -36 == EXPANSION in the header file
+	mini->start = get_tokens(line); // turning it into tokens
 	ft_memdel(line);
-	squish_args(mini);
-	token = mini->start;
-	while (token)
-	{
-		if (is_type(token, ARG))
-			type_arg(token, 0);
-		token = token->next;
-	}
 }

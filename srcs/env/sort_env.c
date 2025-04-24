@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:00:29 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 04:53:06 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/23 19:47:12 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	print_sorted_env(t_env *env)
 	i = 0;
 	while (tab[i])
 	{
-		ft_putstr("declare -x ");
 		ft_putendl(tab[i]);
 		i++;
 	}

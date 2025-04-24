@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:52:31 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 17:27:07 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/25 04:34:21 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@ t_token	*next_cmd(t_token *token, int skip)
 	while (token && token->type != CMD)
 	{
 		token = token->next;
-		if (token && token->type == CMD && token->prev == NULL)
-			;
-		else if (token && token->type == CMD && token->prev->type < END)
-			token = token->next;
+		if (token && token->type == CMD && token->prev->type < END)
+			token = token->next;  // skip CMD that comes after redirection like > cat or | echo
 	}
 	return (token);
 }
 
+// Goes backward until it finds TRUNC and lesser
 t_token	*prev_sep(t_token *token, int skip)
 {
 	if (token && skip)
@@ -53,12 +52,12 @@ int	next_alloc(char *line, int *i)
 
 	count = 0;
 	j = 0;
-	c = ' ';
-	while (line[*i + j] && (line[*i + j] != ' ' || c != ' '))
+	c = ' '; // for quotes
+	while (line[*i + j] && (line[*i + j] != ' ' || c != ' ')) // this checks if we are at the end or if there is a space but space in a quote is fine and we know that because of c
 	{
 		if (c == ' ' && (line[*i + j] == '\'' || line[*i + j] == '\"'))
-			c = line[*i + j++];
-		else if (c != ' ' && line[*i + j] == c)
+			c = line[*i + j++]; // mark it with quotes if there is
+		else if (c != ' ' && line[*i + j] == c) // this is for the end quote
 		{
 			count += 2;
 			c = ' ';
@@ -66,8 +65,8 @@ int	next_alloc(char *line, int *i)
 		}
 		else
 			j++;
-		if (line[*i + j - 1] == '\\')
-			count--;
+		if (line[*i + j - 1] == '\\') // inscae it is escaped we minus it
+			count++;
 	}
 	return (j - count + 1);
 }

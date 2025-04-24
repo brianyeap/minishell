@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:07:21 by brian             #+#    #+#             */
-/*   Updated: 2025/04/16 19:52:00 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/23 23:42:18 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@
 # define EMPTY 0
 # define CMD 1
 # define ARG 2
-# define TRUNC 3
-# define APPEND 4
-# define INPUT 5
-# define PIPE 6
-# define END 7
+# define TRUNC 3 // >
+# define APPEND 4 // >>
+# define INPUT 5 // <
+# define PIPE 6 // |
+# define END 7 // ;
 
 # define SUCCESS 0
 # define ERROR 1
@@ -161,7 +161,6 @@ void		error_and_quit(t_mini *mini);
 // Tokens
 t_token		*get_tokens(char *line);
 void		type_arg(t_token *token, int separator);
-void		squish_args(t_mini *mini);
 
 // Token
 t_token		*next_sep(t_token *token, int skip);

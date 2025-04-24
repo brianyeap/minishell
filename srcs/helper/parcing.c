@@ -6,12 +6,16 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:55:03 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 17:32:56 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/24 18:20:45 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Check if the quotes are closed
+// 0 is not inside quotes
+// 1 is inside double quotes
+// 2 is inside single quotes
 int	quotes(char *line, int index)
 {
 	int	i;
@@ -61,6 +65,9 @@ int	is_last_valid_arg(t_token *token)
 		return (0);
 }
 
+// these ignores the seperator
+// 1 is ignored
+// 0 is not ignored
 int	ignore_sep(char *line, int i)
 {
 	if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == ';')
@@ -80,7 +87,7 @@ int	check_line(t_mini *mini, t_token *token)
 	while (token)
 	{
 		if (is_types(token, "TAI") && (!token->next
-				|| is_types(token->next, "TAIPE")))
+				|| is_types(token->next, "TAIPE"))) // if it's a redirection token and the next thing is another redirection token or end then invalid
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
 			print_token_or_newline(token->next);
@@ -89,7 +96,7 @@ int	check_line(t_mini *mini, t_token *token)
 			return (0);
 		}
 		if (is_types(token, "PE") && (!token->prev || !token->next
-				|| is_types(token->prev, "TAIPE")))
+				|| is_types(token->prev, "TAIPE"))) // if pipe or end at the start or the end or after TAIPE
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
 			ft_putstr_fd(token->str, STDERR);
