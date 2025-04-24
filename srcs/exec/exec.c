@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 23:24:40 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 17:19:07 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/25 06:26:35 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**cmd_tab(t_token *start)
 	int		i;
 
 	if (!start)
-		return (NULL);
+		return (NULL); // if no command
 	token = start->next;
 	i = count_valid_tokens(token) + 2;
 	tab = malloc(sizeof(char *) * i);
@@ -55,7 +55,7 @@ void	exec_cmd(t_mini *mini, t_token *token)
 	char	**cmd;
 	int		i;
 
-	if (mini->charge == 0)
+	if (mini->charge == 0) // return if charge is not 1
 		return ;
 	cmd = cmd_tab(token);
 	i = 0;
