@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:16:05 by brian             #+#    #+#             */
-/*   Updated: 2025/04/23 20:03:15 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/25 17:24:36 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*env_value(char *env)
 	int		size_alloc;
 	char	*env_value;
 
-	size_alloc = env_value_len(env) + 1;
+	size_alloc = env_value_len(env) + 1;  // ge the env value len
 	env_value = malloc(sizeof(char) * size_alloc);
 	if (!env_value)
 		return (NULL);
@@ -85,11 +85,11 @@ char	*get_env_value(char *arg, t_env *env)
 	env_val = ft_strdup("");
 	while (env && env->value)
 	{
-		get_env_key(env_key_name, env->value);
-		if (ft_strcmp(arg, env_key_name) == 0)
+		get_env_key(env_key_name, env->value); // get the key
+		if (ft_strcmp(arg, env_key_name) == 0) // compare the key
 		{
 			ft_memdel(env_val);
-			env_val = env_value(env->value);
+			env_val = env_value(env->value); // get env value
 			return (env_val);
 		}
 		env = env->next;

@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:07:21 by brian             #+#    #+#             */
-/*   Updated: 2025/04/23 23:42:18 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/25 17:15:59 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 
 # define SUCCESS 0
 # define ERROR 1
-# define BUFF_SIZE 4096
+# define BUFF_SIZE 4096 // one page so it's effificent 
 # define EXPANSION -36
 # define IS_DIRECTORY 126
 # define UNKNOWN_COMMAND 127

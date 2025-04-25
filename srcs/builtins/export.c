@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:19:07 by brian             #+#    #+#             */
-/*   Updated: 2025/04/23 20:24:35 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/25 17:20:14 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ char	*get_env_key(char *dest, const char *src)
 	int		i;
 
 	i = 0;
-	while (src[i] && src[i] != '=' && ft_strlen(src) < BUFF_SIZE)
+	while (src[i] && src[i] != '=' && ft_strlen(src) < BUFF_SIZE) // If exist and not = adn len is less than buffSize
 	{
-		dest[i] = src[i];
+		dest[i] = src[i]; 		// copy the name
 		i++;
 	}
 	dest[i] = '\0';

@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 16:56:03 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 17:08:28 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/25 18:33:28 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	*get_env_path(t_env *env, const char *var, size_t len)
 
 	while (env && env->next != NULL)
 	{
-		if (ft_strncmp(env->value, var, len) == 0)
+		if (ft_strncmp(env->value, var, len) == 0) // finding a match
 		{
 			oldpwd = malloc(sizeof(char) * (ft_strlen(env->value) - len) + 1);
 			if (!oldpwd)
@@ -42,7 +42,7 @@ static char	*get_env_path(t_env *env, const char *var, size_t len)
 			j = 0;
 			while (env->value[i++])
 			{
-				if (i > (int)len)
+				if (i > (int)len)  // skip the var name and = like HOME=
 					oldpwd[j++] = env->value[i];
 			}
 			oldpwd[j] = '\0';
@@ -103,13 +103,13 @@ int	ft_cd(char **args, t_env *env)
 	int		cd_ret;
 
 	if (!args[1])
-		return (go_to_path(0, env));
+		return (go_to_path(0, env)); // if no arg provied go home 
 	if (ft_strcmp(args[1], "-") == 0)
-		cd_ret = go_to_path(1, env);
+		cd_ret = go_to_path(1, env); // go to old path
 	else
 	{
-		update_oldpwd(env);
-		cd_ret = chdir(args[1]);
+		update_oldpwd(env); // update old path
+		cd_ret = chdir(args[1]); // change to the path, return 0 on success and 1 on fail
 		if (cd_ret < 0)
 			cd_ret *= -1;
 		if (cd_ret != 0)
