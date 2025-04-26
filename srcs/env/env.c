@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 17:50:25 by brian             #+#    #+#             */
-/*   Updated: 2025/04/23 19:46:21 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/25 20:05:08 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ size_t	size_env(t_env *lst)
 	return (lst_len);
 }
 
+// convert linked list to string seperated by \n
 char	*env_to_str(t_env *lst)
 {
 	char	*env;

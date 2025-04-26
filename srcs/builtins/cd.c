@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 16:56:03 by brian             #+#    #+#             */
-/*   Updated: 2025/04/25 18:33:28 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/25 18:55:28 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ static int	update_oldpwd(t_env *env)
 	char	cwd[PATH_MAX];
 	char	*oldpwd;
 
-	if (getcwd(cwd, PATH_MAX) == NULL)
+	if (getcwd(cwd, PATH_MAX) == NULL) // if failt to get current working directory
 		return (ERROR);
 	oldpwd = ft_strjoin("OLDPWD=", cwd);
 	if (!oldpwd)
 		return (ERROR);
-	if (is_in_env(env, oldpwd) == 0)
+	if (is_in_env(env, oldpwd) == 0) // if not exist
 		env_add(oldpwd, env);
 	ft_memdel(oldpwd);
 	return (SUCCESS);
@@ -93,7 +93,7 @@ static int	go_to_path(int option, t_env *env)
 			return (ERROR);
 		update_oldpwd(env);
 	}
-	ret = chdir(env_path);
+	ret = chdir(env_path); // change to the dir
 	ft_memdel(env_path);
 	return (ret);
 }

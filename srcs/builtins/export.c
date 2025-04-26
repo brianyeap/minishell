@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:19:07 by brian             #+#    #+#             */
-/*   Updated: 2025/04/25 17:20:14 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/25 18:55:08 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	env_add(const char *value, t_env *env)
 	t_env	*new;
 	t_env	*tmp;
 
-	if (env && env->value == NULL)
+	if (env && env->value == NULL) // if value is null
 	{
 		env->value = ft_strdup(value);
 		return (SUCCESS);
@@ -44,11 +44,14 @@ int	env_add(const char *value, t_env *env)
 	if (!new)
 		return (-1);
 	new->value = ft_strdup(value);
+	// why set before last? check env and set
+	// Imagine A B C, A is the env B is env next and c is next next
 	while (env && env->next && env->next->next)
-		env = env->next;
-	tmp = env->next;
-	env->next = new;
-	new->next = tmp;
+		env = env->next; // put it tight before the last one
+	// We are now at B
+	tmp = env->next; // C
+	env->next = new; // Insert new after B
+	new->next = tmp; // add C back making it after new
 	return (SUCCESS);
 }
 

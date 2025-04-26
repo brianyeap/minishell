@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:08:10 by brian             #+#    #+#             */
-/*   Updated: 2025/04/24 18:09:13 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/25 18:54:32 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	quote_check(t_mini *mini, char **line)
 void	parse(t_mini *mini)
 {
 	char	*line;
-	t_token	*token;
 
 	signal(SIGINT, &sig_int); // Ctrl + c
 	signal(SIGQUIT, &sig_quit); // Ctrl + '\'
