@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:55:03 by brian             #+#    #+#             */
-/*   Updated: 2025/04/27 00:21:48 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/29 23:34:02 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,9 @@ int	ignore_sep(char *line, int i)
 	else if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1]
 		== '>' && line[i + 2] && line[i + 2] == '>')
 		return (1);
+	else if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1]
+		== '<' && line[i + 2] && line[i + 2] == '<')
+		return (1);
 	return (0);
 }
 
@@ -86,8 +89,8 @@ int	check_line(t_mini *mini, t_token *token)
 {
 	while (token)
 	{
-		if (is_types(token, "TAI") && (!token->next
-				|| is_types(token->next, "TAIPE"))) // if it's a redirection token and the next thing is another redirection token or end then invalid
+		if (is_types(token, "TAHI") && (!token->next
+				|| is_types(token->next, "TAHIPE"))) // if it's a redirection token and the next thing is another redirection token or end then invalid
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
 			print_token_or_newline(token->next);
@@ -96,7 +99,7 @@ int	check_line(t_mini *mini, t_token *token)
 			return (0);
 		}
 		if (is_types(token, "PE") && (!token->prev || !token->next
-				|| is_types(token->prev, "TAIPE"))) // if pipe or end at the start or the end or after TAIPE
+				|| is_types(token->prev, "TAIHPE"))) // if pipe or end at the start or the end or after TAIPE
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
 			ft_putstr_fd(token->str, STDERR);

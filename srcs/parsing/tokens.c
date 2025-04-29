@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:11:20 by brian             #+#    #+#             */
-/*   Updated: 2025/04/27 00:50:32 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/29 23:29:31 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	type_arg(t_token *token, int separator)
 		token->type = TRUNC;
 	else if (ft_strcmp(token->str, ">>") == 0 && separator == 0)
 		token->type = APPEND;
+	else if (ft_strcmp(token->str, "<<") == 0 && separator == 0)
+		token->type = HEREDOC;
 	else if (ft_strcmp(token->str, "<") == 0 && separator == 0)
 		token->type = INPUT;
 	else if (ft_strcmp(token->str, "|") == 0 && separator == 0)

@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:08:10 by brian             #+#    #+#             */
-/*   Updated: 2025/04/29 20:00:07 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/29 23:47:44 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ char	*space_line(char *line)
 		{
 			new[j++] = ' ';
 			new[j++] = line[i++];
-			if (quotes(line, i) == 0 && line[i] == '>')
-				new[j++] = line[i++]; // this is for if it is a >>
+			if (quotes(line, i) == 0 && (line[i] == '>' || line[i] == '<'))
+				new[j++] = line[i++]; // this is for if it is a >> or <<
 			new[j++] = ' ';
 		}
 		else
@@ -83,8 +83,7 @@ void	parse(t_mini *mini)
 	signal(SIGINT, &sig_int); // Ctrl + c
 	signal(SIGQUIT, &sig_quit); // Ctrl + '\'
 	output_emoji(mini->ret);
-	ft_putstr_fd("\033[0;36m\033[1mminishell ▸ \033[0m", STDERR);
-	line = readline("minishell ▸ ");
+	line = readline("\033[0;36m\033[1mminishell ▸ \033[0m");
 	if (!line)
 	{
 		error_and_quit(mini);

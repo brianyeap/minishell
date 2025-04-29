@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:15:49 by brian             #+#    #+#             */
-/*   Updated: 2025/04/29 20:04:58 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/30 01:29:24 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	fill_token(char *line, int *i, t_token *token)
 
 	j = 0;
 	c = ' '; // quote tracker
+	token->quoted = 0; // for HEREDOC to see if quoted
 	while (line[*i] && (line[*i] != ' ' || c != ' '))
 	{
 		if (c == ' ' && (line[*i] == '\'' || line[*i] == '\"'))
@@ -42,6 +43,7 @@ void	fill_token(char *line, int *i, t_token *token)
 		else if (c != ' ' && line[*i] == c)
 		{
 			c = ' ';
+			token->quoted = 1;
 			(*i)++;
 		}
 		else if (line[*i] == '\\' && (*i)++) // skip it then set the cahr

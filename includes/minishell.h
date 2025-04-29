@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:07:21 by brian             #+#    #+#             */
-/*   Updated: 2025/04/29 20:00:17 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/30 01:24:58 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@
 # define ARG 2
 # define TRUNC 3 // >
 # define APPEND 4 // >>
-# define INPUT 5 // <
-# define PIPE 6 // |
-# define END 7 // ;
+# define HEREDOC 5 // <<
+# define INPUT 6 // <
+# define PIPE 7 // |
+# define END 8 // ;
 
 # define SUCCESS 0
 # define ERROR 1
@@ -63,6 +64,7 @@ typedef struct s_token
 {
 	char			*str;
 	int				type;
+	int 			quoted;
 	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;
@@ -174,6 +176,7 @@ int			next_alloc(char *line, int *i);
 void		input(t_mini *mini, t_token *token);
 void		redir(t_mini *mini, t_token *token, int type);
 int			minipipe(t_mini *mini);
+int	handle_heredoc(t_mini *mini, const char *delimiter, int expand);
 
 // Fd
 void		reset_std(t_mini *mini);
@@ -204,5 +207,8 @@ int			is_builtin(char *command);
 int			exec_bin(char **args, t_env *env, t_mini *mini);
 void		exec_cmd(t_mini *mini, t_token *token);
 int			normalize_exit_code(int ret);
+
+// Main
+int			token_is_quoted(const char *str);
 
 #endif

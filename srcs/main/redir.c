@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 17:41:14 by brian             #+#    #+#             */
-/*   Updated: 2025/04/25 05:03:13 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/30 01:21:39 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,76 @@ int	minipipe(t_mini *mini)
 		mini->last = 0; // not the last command, cause paernt writting into a pipe means there is more to come
 		return (1);  // 1 for parent
 	}
+}
+
+void	mark_expansions(char *line)
+{
+	int i = 0;
+	while (line && line[i])
+	{
+		if (line[i] == '$')
+			line[i] = (char)EXPANSION; // usually -36
+		i++;
+	}
+}
+
+int	handle_heredoc(t_mini *mini, const char *delimiter, int expand)
+{
+	int		pipefd[2];
+	char	*line;
+	char	*expanded;
+
+	if (pipe(pipefd) == -1)
+	{
+		ft_putstr_fd("minishell: ", STDERR);
+		perror("pipe");
+		mini->ret = 1;
+		mini->no_exec = 1;
+		return (-1);
+	}
+
+	while (1)
+	{
+		line = readline("heredoc ▸ ");
+		if (!line)
+		{
+			ft_putstr_fd("minishell: warning: heredoc delimited by end-of-file (wanted `", STDERR);
+			ft_putstr_fd((char *)delimiter, STDERR);
+			ft_putendl_fd("')", STDERR);
+			break;
+		}
+
+		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0
+			&& ft_strlen(line) == ft_strlen(delimiter))
+		{
+			free(line);
+			break;
+		}
+
+		if (expand)
+		{
+			ft_putstr_fd("EXPAND ", STDERR);
+			mark_expansions(line);
+			expanded = expansions(line, mini->env, mini->ret);
+		}
+		else
+		{
+			ft_putstr_fd("NO EXPAND ", STDERR);
+			expanded = ft_strdup(line);
+		}
+
+
+		if (expanded)
+		{
+			write(pipefd[1], expanded, ft_strlen(expanded));
+			write(pipefd[1], "\n", 1);
+			free(expanded);
+		}
+		free(line);
+	}
+
+	close(pipefd[1]);
+	dup2(pipefd[0], STDIN_FILENO);
+	close(pipefd[0]);
+	return (0);
 }
