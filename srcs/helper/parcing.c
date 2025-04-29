@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:55:03 by brian             #+#    #+#             */
-/*   Updated: 2025/04/24 18:20:45 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/27 00:21:48 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int	quotes(char *line, int index)
 
 int	is_seperator(char *line, int i)
 {
-	if (i > 0 && line[i - 1] == '\\' && ft_strchr("<>|;", line[i]))
+	if (i > 0 && line[i - 1] == '\\' && ft_strchr("<>|;", line[i])) // check if previous one is escaped
 		return (0);
-	else if (ft_strchr("<>|;", line[i]) && quotes(line, i) == 0)
+	else if (ft_strchr("<>|;", line[i]) && quotes(line, i) == 0) // not inside quotes
 		return (1);
 	else
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:36:00 by brian             #+#    #+#             */
-/*   Updated: 2025/04/15 04:01:24 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/27 00:13:14 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ void	sig_int(int code)
 
 	(void)code;
 	mini = get_mini_instance(NULL);
-	if (mini->pid == 0)
+	if (mini->pid == 0)  // in parent means it's idling at the shell and not in a process
 	{
-		ft_putstr_fd("\b\b  ", STDERR);
+		ft_putstr_fd("\b\b  ", STDERR); // erase the ^C from terminal
 		ft_putstr_fd("\n", STDERR);
 		ft_putstr_fd(RED"🤬 minishell >"RESET, STDERR);
 		mini->exit_status = 1;
 	}
 	else
-	{
+	{ // a child is running 
 		ft_putstr_fd("\n", STDERR);
 		mini->exit_status = 130;
 	}
@@ -49,14 +49,14 @@ void	sig_quit(int code)
 
 	mini = get_mini_instance(NULL);
 	nbr = ft_itoa(code);
-	if (mini->pid != 0)
+	if (mini->pid != 0) // a child is running 
 	{
 		ft_putstr_fd("Quit: ", STDERR);
 		ft_putendl_fd(nbr, STDERR);
 		mini->exit_status = 131;
 		mini->sigquit = 1;
 	}
-	else
+	else // in parent means it's idling at the shell and not in a process
 		ft_putstr_fd("\b\b  \b\b", STDERR);
 	ft_memdel(nbr);
 }

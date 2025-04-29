@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:08:10 by brian             #+#    #+#             */
-/*   Updated: 2025/04/25 18:54:32 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/27 00:26:38 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*space_line(char *line)
 	new = space_alloc(line); // allocate space for new line
 	while (new && line[i])
 	{
-		if (quotes(line, i) != 2 && line[i] == '$' && i && line[i - 1] != '\\') // checking the $ is not inside single quotes and it is not escaped
+		if (quotes(line, i) != 2 && line[i] == '$' && i && line[i - 1] != '\\') // checking the $ is not inside single quotes and it is not escaped NOTE i made it so that i must be non zero
 			new[j++] = (char)(-line[i++]); // marking it negative which is -36 == EXPANSION in the header file
 		else if (quotes(line, i) == 0 && is_seperator(line, i)) // we are not in quotes and this cahr is a seperator
 		{

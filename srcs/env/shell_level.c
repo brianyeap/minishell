@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:43:04 by brian             #+#    #+#             */
-/*   Updated: 2025/04/16 20:49:45 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/26 21:59:11 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static int	is_not_digit(const char *str)
 	return (0);
 }
 
+// bacially atoi
 static int	get_lvl(const char *str)
 {
 	int	i;
@@ -64,7 +65,7 @@ void	increment_shell(t_env *env)
 	char	*shell_level_value;
 
 	shell_level_value = get_env_value("SHLVL", env);
-	if (ft_strcmp(shell_level_value, "") == 0)
+	if (ft_strcmp(shell_level_value, "") == 0) // if not exist
 	{
 		ft_memdel(shell_level_value);
 		return ;

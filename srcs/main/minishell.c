@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:07:25 by brian             #+#    #+#             */
-/*   Updated: 2025/04/25 05:45:46 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/27 02:30:09 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	redir_and_exec(t_mini *mini, t_token *token)
 	else if (is_type(prev, PIPE))
 		pipe = minipipe(mini); // return 1 for parent and 2 for child
 	if (next && is_type(next, END) == 0 && pipe != 1) // if there is next command and it's not the end and it's a child
-		redir_and_exec(mini, next->next); // recursive to handle the remaining pipe
+		redir_and_exec(mini, next->next); // recursive to handle the remaining tokens
 	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)
 		&& pipe != 1 && mini->no_exec == 0)
 		exec_cmd(mini, token);  // execute if at the start or after | or ; and is child and can exec

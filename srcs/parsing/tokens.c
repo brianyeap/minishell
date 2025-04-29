@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:11:20 by brian             #+#    #+#             */
-/*   Updated: 2025/04/24 00:04:12 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/27 00:50:32 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_token	*next_token(char *line, int *i)
 	return (token);
 }
 
+// turn string into tokens 
 t_token	*get_tokens(char *line)
 {
 	t_token	*prev;
@@ -67,7 +68,7 @@ t_token	*get_tokens(char *line)
 		next->prev = prev;
 		if (prev)
 			prev->next = next;
-		prev = next;
+		prev = next; // so we have a prev for the next
 		type_arg(next, sep); // set the type of the token
 		ft_skip_is_space(line, &i); // skip the is_space
 	}

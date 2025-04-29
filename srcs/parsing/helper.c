@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:15:49 by brian             #+#    #+#             */
-/*   Updated: 2025/04/23 23:02:48 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/27 00:40:00 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	fill_token(char *line, int *i, t_token *token)
 			c = ' ';
 			(*i)++;
 		}
-		else if (line[*i] == '\\' && (*i)++)
-			token->str[j++] = line[(*i)++]; // skip it then set the cahr
+		else if (line[*i] == '\\' && (*i)++) // skip it then set the cahr
+			token->str[j++] = line[(*i)++];
 		else
 			token->str[j++] = line[(*i)++]; // just copy
 	}

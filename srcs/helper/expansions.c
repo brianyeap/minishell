@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 23:36:18 by brian             #+#    #+#             */
-/*   Updated: 2025/04/25 17:49:26 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/27 02:45:20 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ int	arg_alloc_len(const char *arg, t_env *env, int ret)
 				size++; // skip it and treat it as a literal char
 			else
 				size += get_var_len(arg, i, env, ret); // treat it as a variable
-			if (ft_isdigit(arg[i]) == 0) // not valid var
+			if (ft_isdigit(arg[i]) == 0)
 			{
-				while (arg[i + 1] && is_env_char(arg[i])) // if there is next and current is valid var name
+				while (arg[i + 1] && is_env_char(arg[i])) // if there is next and current is valid var name skip through
 					i++;
 			}
-			else
+			else // invalid var name like $1
 				size--;  // minus it cause not valid and won't be included at the end
 		}
 		size++;

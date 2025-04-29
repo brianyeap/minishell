@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:52:31 by brian             #+#    #+#             */
-/*   Updated: 2025/04/25 04:34:21 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/27 01:59:53 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ t_token	*next_cmd(t_token *token, int skip)
 	while (token && token->type != CMD)
 	{
 		token = token->next;
-		if (token && token->type == CMD && token->prev->type < END)
-			token = token->next;  // skip CMD that comes after redirection like > cat or | echo
+		if (token && token->type == CMD && token->prev->type < PIPE)
+			token = token->next;  // skip CMD that comes after redirection like > cat
 	}
 	return (token);
 }
