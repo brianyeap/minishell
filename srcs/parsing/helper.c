@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:15:49 by brian             #+#    #+#             */
-/*   Updated: 2025/04/16 19:52:53 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/29 20:17:53 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,5 @@ void	error_and_quit(t_mini *mini)
 {
 	ft_putendl_fd("exit", STDERR);
 	mini->exit = 1;
+	mini->start = NULL;
 }
