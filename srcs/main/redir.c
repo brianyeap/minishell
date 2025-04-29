@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 17:41:14 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 17:30:35 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/30 04:03:45 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,31 @@ int	minipipe(t_mini *mini)
 		mini->last = 0;
 		return (1);
 	}
+}
+
+int	handle_heredoc(t_mini *mini, const char *delimiter, int expand)
+{
+	int		pipefd[2];
+	char	*line;
+
+	if (pipe(pipefd) == -1)
+	{
+		ft_putstr_fd("minishell: ", STDERR);
+		perror("pipe");
+		mini->ret = 1;
+		mini->no_exec = 1;
+		return (-1);
+	}
+	while (1)
+	{
+		line = readline("heredoc ▸ ");
+		if (handle_heredoc_line(line, (char *)delimiter))
+			break ;
+		heredoc_expand(mini, line, expand, pipefd);
+		ft_memdel(line);
+	}
+	close(pipefd[1]);
+	dup2(pipefd[0], STDIN_FILENO);
+	close(pipefd[0]);
+	return (0);
 }

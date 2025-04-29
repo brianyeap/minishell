@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:07:25 by brian             #+#    #+#             */
-/*   Updated: 2025/04/15 03:51:31 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/30 01:57:24 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	redir_and_exec(t_mini *mini, t_token *token)
 		redir(mini, token, TRUNC);
 	else if (is_type(prev, APPEND))
 		redir(mini, token, APPEND);
+	else if (is_type(prev, HEREDOC))
+		handle_heredoc(mini, token->str, !token->quoted);
 	else if (is_type(prev, INPUT))
 		input(mini, token);
 	else if (is_type(prev, PIPE))
@@ -58,7 +60,7 @@ void	minishell(t_mini *mini)
 	int		status;
 
 	token = next_cmd(mini->start, NOSKIP);
-	token = t_k(is_types(mini->start, "TAI"), mini->start->next, token);
+	token = t_k(is_types(mini->start, "TAHI"), mini->start->next, token);
 	while (mini->exit == 0 && token)
 	{
 		mini->charge = 1;

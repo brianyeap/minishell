@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:55:14 by brian             #+#    #+#             */
-/*   Updated: 2025/04/12 17:26:11 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/30 01:44:11 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	is_types(t_token *token, char *types)
 	else if (ft_strchr(types, 'T') && is_type(token, TRUNC))
 		return (1);
 	else if (ft_strchr(types, 'A') && is_type(token, APPEND))
+		return (1);
+	else if (ft_strchr(types, 'H') && is_type(token, HEREDOC))
 		return (1);
 	else if (ft_strchr(types, 'I') && is_type(token, INPUT))
 		return (1);

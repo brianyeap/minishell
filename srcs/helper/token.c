@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:52:31 by brian             #+#    #+#             */
-/*   Updated: 2025/04/29 23:21:17 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/30 04:12:17 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_token	*next_cmd(t_token *token, int skip)
 	while (token && token->type != CMD)
 	{
 		token = token->next;
-		if (token && token->type == CMD && token->prev->type < END)
+		if (token && token->type == CMD && token->prev->type < PIPE)
 			token = token->next;
 	}
 	return (token);

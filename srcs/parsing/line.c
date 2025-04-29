@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:08:10 by brian             #+#    #+#             */
-/*   Updated: 2025/04/29 23:22:15 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/30 01:55:09 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*space_line(char *line)
 		{
 			new[j++] = ' ';
 			new[j++] = line[i++];
-			if (quotes(line, i) == 0 && line[i] == '>')
+			if (quotes(line, i) == 0 && (line[i] == '>' || line[i] == '<'))
 				new[j++] = line[i++];
 			new[j++] = ' ';
 		}
@@ -81,11 +81,11 @@ void	parse(t_mini *mini)
 	signal(SIGINT, &sig_int);
 	signal(SIGQUIT, &sig_quit);
 	output_emoji(mini->ret);
-	line = readline("\033[0;36m\033[1mminishell ▸ \033[0m");
+	line = readline(CYAN"minishell ▸ "RESET);
 	if (!line)
 	{
 		error_and_quit(mini);
-		return;
+		return ;
 	}
 	if (*line)
 		add_history(line);
