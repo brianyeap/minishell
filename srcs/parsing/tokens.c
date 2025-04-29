@@ -6,19 +6,11 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:11:20 by brian             #+#    #+#             */
-/*   Updated: 2025/04/29 20:33:46 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/29 23:23:35 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static inline t_token	*s(t_token *cond, t_token *if_t, t_token *if_f)
-{
-	if (cond)
-		return (if_t);
-	else
-		return (if_f);
-}
 
 void	type_arg(t_token *token, int separator)
 {
@@ -38,32 +30,6 @@ void	type_arg(t_token *token, int separator)
 		token->type = CMD;
 	else
 		token->type = ARG;
-}
-
-void	squish_args(t_mini *mini)
-{
-	t_token	*token;
-	t_token	*prev;
-
-	token = mini->start;
-	while (token)
-	{
-		prev = prev_sep(token, NOSKIP);
-		if (is_type(token, ARG) && is_types(prev, "TAI"))
-		{
-			while (is_last_valid_arg(prev) == 0)
-				prev = prev->prev;
-			token->prev->next = token->next;
-			if (token->next)
-				token->next->prev = token->prev;
-			token->prev = prev;
-			token->next = s(prev, prev->next, mini->start);
-			prev->next->prev = token;
-			prev->next = s(mini->start->prev, prev->next, token);
-			mini->start = s(mini->start->prev, mini->start->prev, mini->start);
-		}
-		token = token->next;
-	}
 }
 
 t_token	*next_token(char *line, int *i)

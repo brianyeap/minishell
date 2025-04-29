@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:07:21 by brian             #+#    #+#             */
-/*   Updated: 2025/04/29 20:16:53 by brian            ###   ########.fr       */
+/*   Updated: 2025/04/29 23:17:41 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,6 @@ void		error_and_quit(t_mini *mini);
 // Tokens
 t_token		*get_tokens(char *line);
 void		type_arg(t_token *token, int separator);
-void		squish_args(t_mini *mini);
 
 // Token
 t_token		*next_sep(t_token *token, int skip);
