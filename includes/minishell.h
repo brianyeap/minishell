@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:07:21 by brian             #+#    #+#             */
-/*   Updated: 2025/04/30 04:03:16 by brian            ###   ########.fr       */
+/*   Updated: 2025/05/02 01:08:05 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ int			check_line(t_mini *mini, t_token *token);
 int			is_seperator(char *line, int i);
 int			arg_alloc_len(const char *arg, t_env *env, int ret);
 char		*expansions(char *arg, t_env *env, int ret);
-void		output_emoji(int ret);
 int			mini_ret(int cond, int true_val, int false_val);
 void		fill_token(char *line, int *i, t_token *token);
 void		error_and_quit(t_mini *mini);

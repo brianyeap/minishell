@@ -6,19 +6,12 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:15:49 by brian             #+#    #+#             */
-/*   Updated: 2025/04/30 03:00:17 by brian            ###   ########.fr       */
+/*   Updated: 2025/05/02 01:08:09 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	output_emoji(int ret)
-{
-	if (ret)
-		ft_putstr_fd("🤬 ", STDERR);
-	else
-		ft_putstr_fd("😎 ", STDERR);
-}
 
 int	mini_ret(int cond, int true_val, int false_val)
 {

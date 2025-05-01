@@ -3,22 +3,33 @@ NAME    = minishell
 SRC_DIRS = srcs libft
 INC_DIR  = includes
 
-# Find all .c files in the source directories
 CFILES  = $(shell find $(SRC_DIRS) -type f -name "*.c")
 OFILES  = $(CFILES:.c=.o)
 
-# Compiler settings
 CC       = gcc
 CFLAGS   = -Wall -Wextra -Werror
 INCLUDES = -I$(INC_DIR)
 
-# Libraries for readline
-LIBS = -lreadline -lncurses
+# Detect platform (Darwin = macOS, Linux = Linux)
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S),Darwin)
+	# macOS: Use Homebrew GNU Readline (if installed)
+	BREW_PREFIX := $(shell brew --prefix readline 2>/dev/null)
+	ifneq ($(BREW_PREFIX),)
+		CFLAGS   += -I$(BREW_PREFIX)/include
+		LDFLAGS  += -L$(BREW_PREFIX)/lib
+	endif
+	LIBS = -lreadline -lncurses
+else
+	# Linux (standard locations)
+	LIBS = -lreadline -lncurses
+endif
 
 all: $(NAME)
 
 $(NAME): $(OFILES)
-	$(CC) $(CFLAGS) -o $(NAME) $(OFILES) $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OFILES) $(LDFLAGS) $(LIBS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)

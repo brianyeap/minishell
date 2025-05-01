@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:08:10 by brian             #+#    #+#             */
-/*   Updated: 2025/04/30 01:55:09 by brian            ###   ########.fr       */
+/*   Updated: 2025/05/02 01:10:08 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,17 @@ void	parse(t_mini *mini)
 
 	signal(SIGINT, &sig_int);
 	signal(SIGQUIT, &sig_quit);
-	output_emoji(mini->ret);
 	line = readline(CYAN"minishell ▸ "RESET);
 	if (!line)
 	{
-		error_and_quit(mini);
+		if (mini->sigint || mini->sigquit)
+		{
+			ft_putendl_fd("exit", STDERR);
+			mini->exit = 1;
+			mini->start = NULL;
+		}
+		else
+			error_and_quit(mini);
 		return ;
 	}
 	if (*line)
