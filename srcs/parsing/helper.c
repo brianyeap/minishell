@@ -6,12 +6,11 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:15:49 by brian             #+#    #+#             */
-/*   Updated: 2025/05/02 01:08:09 by brian            ###   ########.fr       */
+/*   Updated: 2025/05/03 00:22:26 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	mini_ret(int cond, int true_val, int false_val)
 {
@@ -33,14 +32,17 @@ void	fill_token(char *line, int *i, t_token *token)
 	{
 		if (c == ' ' && (line[*i] == '\'' || line[*i] == '\"'))
 			c = line[(*i)++];
-		else if (c != ' ' && line[*i] == c)
+		else if (c != ' ' && line[*i++] == c)
 		{
 			c = ' ';
 			token->quoted = 1;
-			(*i)++;
 		}
-		else if (line[*i] == '\\' && (*i)++)
-			token->str[j++] = line[(*i)++];
+		else if (line[*i] == '\\' && c != '\'')
+		{
+			(*i)++;
+			if (line[*i])
+				token->str[j++] = line[(*i)++];
+		}
 		else
 			token->str[j++] = line[(*i)++];
 	}

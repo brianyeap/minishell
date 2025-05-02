@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 23:36:18 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 04:41:51 by brian            ###   ########.fr       */
+/*   Updated: 2025/05/03 01:47:35 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,16 @@ int	arg_alloc_len(const char *arg, t_env *env, int ret)
 		if (arg[i] == EXPANSION)
 		{
 			i++;
-			if ((arg[i] == '\0' || ft_isalnum(arg[i]) == 0) && arg[i] != '?')
+			if (!arg[i])
+			{
+				size++;
+				break ;
+			}
+			if ((ft_isalnum(arg[i]) == 0) && arg[i] != '?')
 				size++;
 			else
 				size += get_var_len(arg, i, env, ret);
-			if (ft_isdigit(arg[i]) == 0)
-			{
-				while (arg[i + 1] && is_env_char(arg[i]))
-					i++;
-			}
-			else
-				size--;
+			arg_alloc_len_helper(arg, &i, &size);
 		}
 		size++;
 	}

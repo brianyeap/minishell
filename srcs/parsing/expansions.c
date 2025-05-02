@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 23:25:34 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 20:27:10 by brian            ###   ########.fr       */
+/*   Updated: 2025/05/02 02:45:19 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,18 @@ char	*expansions(char *arg, t_env *env, int ret)
 		return (NULL);
 	ex.i = 0;
 	ex.j = 0;
-	while (ex.i < new_arg_len && arg[ex.j])
+	while (arg[ex.j])
 	{
-		while (arg[ex.j] == EXPANSION)
+		if (arg[ex.j] == EXPANSION)
 		{
 			ex.j++;
-			if ((arg[ex.j] == '\0' || ft_isalnum(arg[ex.j]) == 0)
-				&& arg[ex.j] != '?')
+			if (!arg[ex.j] || (ft_isalnum(arg[ex.j]) == 0 && arg[ex.j] != '?'))
 				ex.new_arg[ex.i++] = '$';
 			else
 				insert_var(&ex, arg, env, ret);
 		}
-		ex.new_arg[ex.i++] = arg[ex.j++];
+		else
+			ex.new_arg[ex.i++] = arg[ex.j++];
 	}
 	ex.new_arg[ex.i] = '\0';
 	return (ex.new_arg);

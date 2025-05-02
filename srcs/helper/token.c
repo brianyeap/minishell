@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:52:31 by brian             #+#    #+#             */
-/*   Updated: 2025/04/30 04:12:17 by brian            ###   ########.fr       */
+/*   Updated: 2025/05/03 01:12:55 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,29 +43,37 @@ t_token	*next_sep(t_token *token, int skip)
 	return (token);
 }
 
+static void	next_alloc_increment(int *j, int *len)
+{
+	(*j)++;
+	(*len)++;
+}
+
 int	next_alloc(char *line, int *i)
 {
-	int		count;
+	int		len;
 	int		j;
 	char	c;
 
-	count = 0;
+	len = 0;
 	j = 0;
 	c = ' ';
 	while (line[*i + j] && (line[*i + j] != ' ' || c != ' '))
 	{
-		if (c == ' ' && (line[*i + j] == '\'' || line[*i + j] == '\"'))
+		if (c == ' ' && (line[*i + j] == '\'' || line[*i + j] == '"'))
 			c = line[*i + j++];
 		else if (c != ' ' && line[*i + j] == c)
 		{
-			count += 2;
 			c = ' ';
 			j++;
 		}
+		else if (line[*i + j] == '\\' && c != '\'')
+		{
+			if (line[*i + ++j])
+				next_alloc_increment(&j, &len);
+		}
 		else
-			j++;
-		if (line[*i + j - 1] == '\\')
-			count++;
+			next_alloc_increment(&j, &len);
 	}
-	return (j - count + 1);
+	return (len + 1);
 }

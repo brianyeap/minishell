@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:07:21 by brian             #+#    #+#             */
-/*   Updated: 2025/05/02 01:08:05 by brian            ###   ########.fr       */
+/*   Updated: 2025/05/03 01:45:01 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ char		*expansions(char *arg, t_env *env, int ret);
 int			mini_ret(int cond, int true_val, int false_val);
 void		fill_token(char *line, int *i, t_token *token);
 void		error_and_quit(t_mini *mini);
+void		arg_alloc_len_helper(const char *arg, int *i, int *size);
 
 // Tokens
 t_token		*get_tokens(char *line);
