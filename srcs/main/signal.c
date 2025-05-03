@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:36:00 by brian             #+#    #+#             */
-/*   Updated: 2025/05/02 01:16:14 by brian            ###   ########.fr       */
+/*   Updated: 2025/05/04 02:24:39 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	sig_int(int code)
 	else
 	{
 		ft_putstr_fd("\n", STDERR);
-		mini->exit_status = 130;
+		mini->exit_status = 128 + 2;
 	}
 	mini->sigint = 1;
 }
@@ -54,10 +54,13 @@ void	sig_quit(int code)
 	{
 		ft_putstr_fd("Quit: ", STDERR);
 		ft_putendl_fd(nbr, STDERR);
-		mini->exit_status = 131;
+		mini->exit_status = 128 + 3;
 	}
 	else
-		ft_putstr_fd("\b\b  \b\b", STDERR);
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
 	mini->sigquit = 1;
 	ft_memdel(nbr);
 }
