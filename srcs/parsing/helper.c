@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:15:49 by brian             #+#    #+#             */
-/*   Updated: 2025/05/03 21:17:47 by brian            ###   ########.fr       */
+/*   Updated: 2025/05/03 22:00:41 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ int	mini_ret(int cond, int true_val, int false_val)
 		return (true_val);
 	else
 		return (false_val);
+}
+
+void	fill_token_helper(char *c, t_token *token)
+{
+	*c = ' ';
+	token->quoted = 1;
 }
 
 void	fill_token(char *line, int *i, t_token *token)
@@ -35,8 +41,7 @@ void	fill_token(char *line, int *i, t_token *token)
 		else if (c != ' ' && line[*i] == c)
 		{
 			(*i)++;
-			c = ' ';
-			token->quoted = 1;
+			fill_token_helper(&c, token);
 		}
 		else if (line[*i] == '\\' && c != '\'')
 		{
