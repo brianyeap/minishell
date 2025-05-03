@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:15:49 by brian             #+#    #+#             */
-/*   Updated: 2025/05/03 00:22:26 by brian            ###   ########.fr       */
+/*   Updated: 2025/05/03 21:17:47 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ void	fill_token(char *line, int *i, t_token *token)
 	{
 		if (c == ' ' && (line[*i] == '\'' || line[*i] == '\"'))
 			c = line[(*i)++];
-		else if (c != ' ' && line[*i++] == c)
+		else if (c != ' ' && line[*i] == c)
 		{
+			(*i)++;
 			c = ' ';
 			token->quoted = 1;
 		}
