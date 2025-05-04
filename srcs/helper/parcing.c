@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:55:03 by brian             #+#    #+#             */
-/*   Updated: 2025/04/30 01:43:54 by brian            ###   ########.fr       */
+/*   Updated: 2025/05/05 01:06:34 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	check_line(t_mini *mini, t_token *token)
 	while (token)
 	{
 		if (is_types(token, "TAHI") && (!token->next
-				|| is_types(token->next, "TAIPE")))
+				|| is_types(token->next, "TAHIPE")))
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
 			print_token_or_newline(token->next);
