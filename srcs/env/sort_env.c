@@ -6,7 +6,7 @@
 /*   By: brian <brian@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:00:29 by brian             #+#    #+#             */
-/*   Updated: 2025/04/14 04:53:06 by brian            ###   ########.fr       */
+/*   Updated: 2025/05/05 02:14:07 by brian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,22 @@ void	sort_env(char **tab, int env_len)
 	}
 }
 
+void print_sorted_env_helper(char *eq, char *tab)
+{
+	*eq = '\0';
+	ft_putstr("declare -x ");
+	ft_putstr(tab);
+	ft_putstr("=\"");
+	ft_putstr(eq + 1);
+	ft_putendl("\"");
+}
+
 void	print_sorted_env(t_env *env)
 {
 	int		i;
 	char	**tab;
 	char	*str_env;
+	char	*eq;
 
 	str_env = env_to_str(env);
 	tab = ft_split(str_env, '\n');
@@ -61,8 +72,14 @@ void	print_sorted_env(t_env *env)
 	i = 0;
 	while (tab[i])
 	{
-		ft_putstr("declare -x ");
-		ft_putendl(tab[i]);
+		eq = ft_strchr(tab[i], '=');
+		if (eq)
+			print_sorted_env_helper(eq, tab[i]);
+		else
+		{
+			ft_putstr("declare -x ");
+			ft_putendl(tab[i]);
+		}
 		i++;
 	}
 	free_tab(tab);
